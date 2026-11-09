@@ -1,0 +1,98 @@
+---
+interface Props {
+  submitLabel?: string;
+}
+const { submitLabel = "Request This Part" } = Astro.props;
+---
+<form class="enquiry-form grid grid-cols-1 gap-4 md:grid-cols-2" method="POST" action="/api/enquiry">
+  <input type="hidden" name="type" value="parts_request" />
+  <input
+    type="text"
+    name="company"
+    tabindex="-1"
+    autocomplete="off"
+    class="absolute left-[-9999px]"
+    aria-hidden="true"
+  />
+
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Full Name *
+    <input required name="name" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Mobile Number *
+    <input required name="phone" type="tel" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Email Address *
+    <input required name="email" type="email" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Vehicle Make *
+    <input required name="vehicleMake" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Vehicle Model *
+    <input required name="vehicleModel" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Year *
+    <input required name="vehicleYear" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+    Transmission
+    <select name="transmission" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm">
+      <option value="">Not sure / not applicable</option>
+      <option value="Automatic">Automatic</option>
+      <option value="Manual">Manual</option>
+    </select>
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Additional Vehicle Info
+    <input name="vehicleInfo" type="text" placeholder="e.g. badge, engine size, series" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Part Required *
+    <input required name="partName" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Part Description
+    <textarea name="partDescription" rows="3" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"></textarea>
+  </label>
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Additional Comments
+    <textarea name="comments" rows="2" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"></textarea>
+  </label>
+
+  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+    Reference Photos (optional)
+    <input
+      name="photos"
+      type="file"
+      accept="image/*"
+      multiple
+      class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"
+    />
+    <span class="text-xs text-ink-500">Images only, up to 8MB each.</span>
+  </label>
+
+  <div class="md:col-span-2">
+    {Boolean(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) && (
+      <div class="cf-turnstile mb-4" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}></div>
+    )}
+    <button
+      type="submit"
+      class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
+    >
+      {submitLabel}
+    </button>
+    <p class="form-status mt-3 text-sm" role="status"></p>
+  </div>
+</form>
+
+<script>
+  import { initEnquiryForms } from "../lib/enquiryFormClient";
+  initEnquiryForms();
+</script>

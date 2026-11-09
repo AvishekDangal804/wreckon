@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/Container.astro";
+import { db } from "../../lib/db/client";
+import { enquiries, enquiryPhotos } from "../../lib/db/schema";
+import { and, desc, eq, inArray } from "drizzle-orm";
+
+export const prerender = false;
+
+const TYPES = ["general_contact", "parts_request", "vehicle_valuation"] as const;
+const STATUSES = ["new", "contacted", "closed"] as const;
+
+const typeFilter = Astro.url.searchParams.get("type");
+const statusFilter = Astro.url.searchParams.get("status");
+
+type Row = typeof enquiries.$inferSelect;
+let rows: Row[] = [];
+const photosByEnquiry = new Map<number, string[]>();
+
+if (db) {
+  const conditions = [];
+  if (typeFilter && (TYPES as readonly string[]).includes(typeFilter)) {
+    conditions.push(eq(enquiries.type, typeFilter as (typeof TYPES)[number]));
+  }
+  if (statusFilter && (STATUSES as readonly string[]).includes(statusFilter)) {
+    conditions.push(eq(enquiries.status, statusFilter as (typeof STATUSES)[number]));
+  }
+
+  rows = await db
+    .select()
+    .from(enquiries)
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(desc(enquiries.createdAt));
+
+  const ids = rows.map((r) => r.id);
+  if (ids.length) {
+    const photoRows = await db.select().from(enquiryPhotos).where(inArray(enquiryPhotos.enquiryId, ids));
+    for (const p of photoRows) {
+      const list = photosByEnquiry.get(p.enquiryId) ?? [];
+      list.push(p.blobUrl);
+      photosByEnquiry.set(p.enquiryId, list);
+    }
+  }
+}
+---
+<BaseLayout title="Admin — Enquiries" description="WRECKON admin enquiries list.">
+  <Container class="py-10">
+    <div class="flex items-center justify-between">
+      <h1 class="font-display text-2xl font-bold text-ink-900">Enquiries</h1>
+      <form method="POST" action="/api/admin/logout">
+        <button type="submit" class="text-sm font-medium text-ink-600 hover:text-amber-600">Log Out</button>
+      </form>
+    </div>
+
+    {!db ? (
+      <p class="mt-6 rounded-lg bg-ink-100 p-4 text-sm text-ink-700">
+        Database not configured yet — set <code>DATABASE_URL</code> to enable persisted enquiries. See the README.
+      </p>
+    ) : (
+      <>
+        <form class="mt-6 flex flex-wrap gap-3 text-sm" method="GET">
+          <select name="type" class="rounded-md border border-ink-600/30 bg-white px-3 py-2">
+            <option value="">All types</option>
+            {TYPES.map((t) => (
+              <option value={t} selected={typeFilter === t}>{t}</option>
+            ))}
+          </select>
+          <select name="status" class="rounded-md border border-ink-600/30 bg-white px-3 py-2">
+            <option value="">All statuses</option>
+            {STATUSES.map((s) => (
+              <option value={s} selected={statusFilter === s}>{s}</option>
+            ))}
+          </select>
+          <button type="submit" class="rounded-md bg-ink-900 px-4 py-2 text-white">Filter</button>
+        </form>
+
+        <div class="mt-6 overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="border-b border-ink-600/20 text-ink-500">
+                <th class="py-2 pr-4">Date</th>
+                <th class="py-2 pr-4">Type</th>
+                <th class="py-2 pr-4">Status</th>
+                <th class="py-2 pr-4">Customer</th>
+                <th class="py-2 pr-4">Details</th>
+                <th class="py-2 pr-4">Photos</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr class="border-b border-ink-600/10 align-top">
+                  <td class="py-3 pr-4 whitespace-nowrap">{row.createdAt.toLocaleString()}</td>
+                  <td class="py-3 pr-4">{row.type}</td>
+                  <td class="py-3 pr-4">{row.status}</td>
+                  <td class="py-3 pr-4">
+                    <div class="font-medium text-ink-900">{row.customerName}</div>
+                    <div class="text-ink-500">{row.customerPhone}</div>
+                    <div class="text-ink-500">{row.customerEmail}</div>
+                  </td>
+                  <td class="py-3 pr-4 max-w-sm">
+                    <pre class="whitespace-pre-wrap text-xs text-ink-600">{JSON.stringify(row.details, null, 2)}</pre>
+                  </td>
+                  <td class="py-3 pr-4">
+                    {(photosByEnquiry.get(row.id) ?? []).map((url) => (
+                      <a href={url} target="_blank" rel="noopener noreferrer" class="block text-amber-600 hover:text-amber-500">
+                        photo
+                      </a>
+                    ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {rows.length === 0 && <p class="mt-6 text-ink-500">No enquiries yet.</p>}
+        </div>
+      </>
+    )}
+  </Container>
+</BaseLayout>

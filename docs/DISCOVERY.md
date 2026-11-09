@@ -24,7 +24,7 @@ Three of five gave strong signal on navigation, categorisation, lead-gen pattern
 
 ## 1–2. Project Folder Inspection
 
-`D:\wreckon` is a freshly initialised git repository on branch `main`, containing only `.git` — **no files, no commits, no existing work to preserve.** Safe to build on from scratch; nothing was touched during this discovery phase.
+**Update:** this section originally described the project folder as empty. That is no longer accurate. `c:\Work\wreckon` now contains a working preview build — the Phase 1 (Foundation) and most of Phase 2 (Core Content) output described in the roadmap below — already committed and pushed to `origin/main` on GitHub. This includes the Astro + Tailwind scaffold, base layout/header/footer, home/about/services/contact/FAQ/privacy/terms pages, make and parts-category templates driven by content collections, and the `/api/enquiry` route (logs submissions, or emails via Resend if `RESEND_API_KEY`/`ENQUIRY_TO_EMAIL` are set). See [README.md](../README.md) for current status. Business details, makes/parts/service copy, and photography are still placeholders — see §8 below, which remains unresolved.
 
 ---
 
@@ -192,17 +192,63 @@ No API endpoints, credentials, or integration behaviour are invented here. This 
 
 ---
 
-## Implementation Roadmap
+## Round 2 — Backend, Database & Expanded Functionality
 
-| Phase | Scope |
-|---|---|
-| **0 — Discovery** (this document) | Stack, sitemap, design direction, open questions. Awaiting your review/approval. |
-| **1 — Foundation** | Repo scaffold, Tailwind design tokens, base layout/nav/footer, home/about/services/contact pages, SEO skeleton (sitemap, robots, schema scaffolding), staging deploy pipeline. |
-| **2 — Core Content** | Make/category page templates (content-collection driven), enquiry/request-a-part/sell-your-car forms wired to email, location pages if applicable, legal pages. |
-| **3 — Content & Polish** | Real copy and photography in, full schema markup, GA4/Search Console live, performance/accessibility pass, launch on production domain. |
-| **4 — Post-Launch** | Blog/content marketing, review acquisition, analytics-driven iteration. |
-| **5 — Hazarlink Integration** (pending their docs/access) | Scope and build the real adapter for lead routing and/or stock sync once Hazarlink provides documentation and credentials. |
+The brief expanded after the above was written: a real backend/database, two distinct lead-gen forms (Parts Enquiry, Vehicle Valuation) with photo upload, spam protection, and secure admin access are now in scope. This round's research also revisited the primary functional reference, **wreckeroo.com.au** (previously blocked by bot-verification; successfully re-fetched this session, along with wrecky.com.au as secondary reference).
+
+**What the reference sites actually do, relevant to this round:**
+- Neither has a part-category taxonomy — both browse an actual vehicle inventory by make/model/year ("Total Wrecking Cars: 124" on Wreckeroo), not by category. WRECKON currently does category + make pages with no inventory search — see Decision 4 below on why this isn't being copied yet.
+- Both use one shared form toggled between "Cash for Cars" and "Request a Part," not two separate forms — WRECKON intentionally builds two distinct forms per the brief, which is an improvement, not a reference-copy.
+- Neither has a photo-upload field on their forms — WRECKON adding one is a genuine differentiator.
+- Both have inconsistent pricing claims and copy errors across pages (contradicting payment methods, typos) — explicitly not to be replicated.
+
+### §11 — Backend & Database Architecture
+
+- **Stack addition:** Vercel Postgres (Neon-backed) + Drizzle ORM (type-safe schema/migrations, pairs naturally with Astro/TS) + Vercel Blob for uploaded images. All chosen to integrate with the existing `@astrojs/vercel` adapter without adding an unrelated hosting relationship.
+- **Schema** — one core table plus a flexible details column, deliberately not over-normalized, since field requirements may still shift once the manager confirms real service/vehicle details (§8/§15):
+  - `enquiries`: `id`, `type` (`parts_request` | `vehicle_valuation` | `general_contact`), `status` (`new` | `contacted` | `closed`), `created_at`, `customer_name`, `customer_phone`, `customer_email`, `details` (JSONB — vehicle make/model/year/transmission/condition/drivable/location/part name/description/additional info).
+  - `enquiry_photos`: `id`, `enquiry_id` (FK), `blob_url`, `uploaded_at`.
+  - `/api/enquiry` is **extended**, not replaced: it keeps its existing Resend-email-or-console-log behaviour and additionally writes a DB row (plus uploads any photos to Blob).
+- **Admin view:** a simple password-gated `/admin` route listing/filtering enquiries by type/status (see Decision 5).
+
+### §12 — Updated Functional Requirements
+
+- Split the current single `EnquiryForm.astro` into two purpose-built forms:
+  - **Parts Enquiry** (`/parts/request`): name, mobile, email, make, model, year, transmission (where relevant), additional vehicle info, part name, part description, comments, optional photos.
+  - **Vehicle Valuation** (`/sell-your-car`): name, contact number, email, make, model, year, location, condition, drivable (yes/no), transmission, additional info, photos.
+- Shared Zod validation schema used both client-side (immediate feedback) and server-side (never trust the client) — required-field indicators, loading state, real success/error messaging tied to the actual DB write, no fake success states.
+- Image upload: client-side type/size validation before upload, re-validated server-side.
+- Spam protection: honeypot field + Cloudflare Turnstile widget + IP rate-limiting via Upstash Redis on `/api/enquiry` (in-memory rate limiting doesn't survive serverless cold starts, hence Upstash).
+
+### §13 — Updated Sitemap
+
+Existing pages already satisfy most of the brief's 10-page list (`/about`, `/services`, `/services/[service]`, `/parts`, `/parts/[category]`, `/parts/request`, `/sell-your-car`, `/contact`, `/privacy`, `/terms`, `/faq`, `/makes`, `/makes/[make]`). One net-new page: **`/how-it-works`** — both reference sites lead with a 3–4 step "how it works" section; worth its own page plus a homepage section, using genuine WRECKON process steps once confirmed, never invented ones.
+
+### §14 — Decisions Needing Manager Confirmation Before Backend Implementation
+
+1. **Database/hosting provider** — recommended Vercel Postgres; alternatives Supabase or Turso. Affects which account/credentials get created.
+2. **Image upload storage** — recommended Vercel Blob; alternative Cloudflare R2/S3-compatible if you want it decoupled from Vercel.
+3. **Spam protection provider** — recommended Cloudflare Turnstile (free) + Upstash Redis for rate limiting; needs a Turnstile site key and optionally an Upstash account.
+4. **Live parts-inventory search vs. category browsing** — the primary reference searches real inventory by make/model/year; WRECKON's brief forbids fabricated stock data. Recommendation: keep category+make browsing → "Request a Part" for now, defer real inventory search until Hazarlink (or another real stock source) exists. This is a conscious scope decision, not an oversight.
+5. **Admin access model** — recommended for this phase: one shared password behind a server-checked session cookie, no multi-user accounts. Confirm if individually attributable staff logins (Auth.js/Clerk) are actually needed now.
+
+These are additive to the original §8 list (ABN/licensing, branding, real photography, confirmed service list, locations, makes, parts categories, reviews, domain/DNS access, who receives submissions) — none of which this round resolves; it only designs the technical architecture around them.
 
 ---
 
-**Next step:** review the open questions in §8 and the stack/design direction in §3 and §6. No code or site structure will be built until you confirm.
+## Implementation Roadmap
+
+| Phase | Scope | Status |
+|---|---|---|
+| **0 — Discovery** | Stack, sitemap, design direction, open questions. | Done |
+| **1 — Foundation** | Repo scaffold, Tailwind design tokens, base layout/nav/footer, home/about/services/contact pages, SEO skeleton, staging deploy pipeline. | Done |
+| **2 — Core Content** | Make/category page templates, enquiry/request-a-part/sell-your-car forms wired to email, legal pages. | Done |
+| **3 — Backend & Database** | Vercel Postgres + Drizzle schema, Blob photo uploads, extend `/api/enquiry` to persist, honeypot + Turnstile + Upstash rate-limiting, password-gated `/admin` view. | **Next — pending Decisions in §14** |
+| **4 — Expanded Frontend** | Split Parts Enquiry / Vehicle Valuation into two dedicated forms, add `/how-it-works` page + homepage section. | Pending Phase 3 |
+| **5 — Content & Polish** | Real copy and photography in, full schema markup, GA4/Search Console live, performance/accessibility pass, launch on production domain. | Pending real business inputs (§8/§15) |
+| **6 — Post-Launch** | Blog/content marketing, review acquisition, analytics-driven iteration. | Not started |
+| **7 — Hazarlink Integration** (pending their docs/access) | Scope and build the real adapter for lead routing and/or stock sync once Hazarlink provides documentation and credentials. | Blocked on Hazarlink docs |
+
+---
+
+**Next step:** confirm the 5 decisions in §14 (DB/storage provider, spam-protection provider, inventory-search scope, admin access model), then Phase 3 (backend/database) implementation begins. The original open items in §8 remain outstanding and still block real launch content regardless of backend progress.

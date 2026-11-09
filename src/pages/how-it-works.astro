@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/Container.astro";
+---
+<BaseLayout
+  title="How It Works"
+  description="How selling your car or requesting a used part with WRECKON works."
+>
+  <Container class="py-16">
+    <h1 class="font-display text-4xl font-bold text-ink-900">How It Works</h1>
+
+    <div class="mt-12 grid grid-cols-1 gap-12 md:grid-cols-2">
+      <div>
+        <h2 class="font-display text-2xl font-bold text-ink-900">Selling Your Car</h2>
+        <ol class="mt-4 space-y-3 text-sm text-ink-700">
+          <li><strong>1. Tell us about your vehicle</strong> — make, model, year and condition.</li>
+          <li><strong>2. We get back to you</strong> with a quote.</li>
+          <li><strong>3. If you accept</strong>, we arrange pick-up and payment by bank transfer or EFT.</li>
+        </ol>
+        <a
+          href="/sell-your-car"
+          class="mt-6 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
+        >
+          Get a Quote
+        </a>
+      </div>
+
+      <div>
+        <h2 class="font-display text-2xl font-bold text-ink-900">Requesting a Part</h2>
+        <ol class="mt-4 space-y-3 text-sm text-ink-700">
+          <li><strong>1. Tell us what you need</strong> — the vehicle and part details.</li>
+          <li><strong>2. We check availability</strong> against what we've got.</li>
+          <li><strong>3. We get back to you</strong> with pricing and next steps.</li>
+        </ol>
+        <a
+          href="/parts/request"
+          class="mt-6 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
+        >
+          Request a Part
+        </a>
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

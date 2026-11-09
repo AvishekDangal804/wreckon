@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
-import EnquiryForm from "../../components/EnquiryForm.astro";
+import PartsEnquiryForm from "../../components/PartsEnquiryForm.astro";
 ---
 <BaseLayout
   title="Request a Part"
@@ -15,7 +15,7 @@ import EnquiryForm from "../../components/EnquiryForm.astro";
       </p>
 
       <div class="mt-10 rounded-2xl border border-ink-600/15 bg-white p-6">
-        <EnquiryForm subject="Part Request" submitLabel="Request This Part" />
+        <PartsEnquiryForm submitLabel="Request This Part" />
       </div>
     </div>
   </Container>
