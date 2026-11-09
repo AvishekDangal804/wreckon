@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  /* "Premium industrial" palette — dark graphite base, single amber accent. */
+  --color-ink-950: #0b0d10;
+  --color-ink-900: #121519;
+  --color-ink-800: #1b1f25;
+  --color-ink-700: #272d35;
+  --color-ink-600: #3a4249;
+  --color-ink-400: #6b7480;
+  --color-ink-200: #c3c9d1;
+  --color-ink-100: #e7e9ec;
+  --color-ink-50: #f6f7f8;
+
+  --color-amber-600: #a35e1b;
+  --color-amber-500: #c97623;
+  --color-amber-400: #e8923a;
+  --color-amber-300: #f0ab61;
+  --color-amber-200: #f6ccA0;
+
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-ink-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+.content {
+  color: var(--color-ink-700);
+  line-height: 1.75;
+}
+.content p {
+  margin-top: 1rem;
+}
+.content ul {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}

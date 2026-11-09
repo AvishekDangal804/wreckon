@@ -1,0 +1,83 @@
+---
+import Container from "./Container.astro";
+import { siteConfig } from "../lib/siteConfig";
+
+const navItems = [
+  { label: "Services", href: "/services" },
+  { label: "Parts", href: "/parts" },
+  { label: "Makes", href: "/makes" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
+---
+<header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
+  <Container class="flex items-center justify-between py-4">
+    <a href="/" class="font-display text-xl font-bold tracking-tight">
+      {siteConfig.name}
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8">
+      {navItems.map((item) => (
+        <a href={item.href} class="text-sm font-medium text-ink-200 hover:text-amber-400 transition-colors">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden md:flex items-center gap-4">
+      <a
+        href="/sell-your-car"
+        class="text-sm font-medium text-ink-200 hover:text-amber-400 transition-colors"
+      >
+        Sell Your Car
+      </a>
+      <a
+        href={siteConfig.phone.href}
+        class="inline-flex items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
+      >
+        Call {siteConfig.phone.display}
+      </a>
+    </div>
+
+    <button
+      id="menu-toggle"
+      class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-ink-200 hover:text-amber-400"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </Container>
+
+  <nav id="mobile-menu" class="hidden md:hidden border-t border-ink-700 bg-ink-950">
+    <Container class="flex flex-col gap-1 py-3">
+      {navItems.map((item) => (
+        <a href={item.href} class="rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
+          {item.label}
+        </a>
+      ))}
+      <a href="/sell-your-car" class="rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
+        Sell Your Car
+      </a>
+      <a
+        href={siteConfig.phone.href}
+        class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-semibold text-ink-950"
+      >
+        Call {siteConfig.phone.display}
+      </a>
+    </Container>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("mobile-menu");
+  toggle?.addEventListener("click", () => {
+    const isHidden = menu?.classList.contains("hidden");
+    menu?.classList.toggle("hidden");
+    toggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
+  });
+</script>

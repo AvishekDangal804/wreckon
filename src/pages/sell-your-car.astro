@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Container from "../components/Container.astro";
+import EnquiryForm from "../components/EnquiryForm.astro";
+---
+<BaseLayout
+  title="Sell Your Car"
+  description="Get a quote for your old, damaged or unwanted vehicle."
+>
+  <Hero
+    eyebrow="Cash for Cars"
+    title="Sell your car, quickly and simply."
+    subtitle="Old, damaged, unregistered or just unwanted — tell us about your vehicle and we'll get back to you with a quote."
+    primaryCta={{ label: "Get a Quote Below", href: "#quote" }}
+  />
+
+  <Container class="py-16">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-3">
+      <div class="content md:col-span-1">
+        <h2 class="font-display text-2xl font-bold text-ink-900">How it works</h2>
+        <ol class="mt-4 space-y-3 text-sm text-ink-700">
+          <li><strong>1. Tell us about your vehicle</strong> — make, model, year and condition.</li>
+          <li><strong>2. We get back to you</strong> with a quote.</li>
+          <li><strong>3. If you accept</strong>, we arrange pick-up and payment by bank transfer or EFT.</li>
+        </ol>
+        <p class="mt-6 rounded-lg bg-ink-100 p-4 text-xs text-ink-600">
+          Vehicle payments are made by bank transfer or EFT, in line with current Australian regulations
+          restricting cash payments for vehicle purchases.
+        </p>
+      </div>
+
+      <div id="quote" class="md:col-span-2 rounded-2xl border border-ink-600/15 bg-white p-6">
+        <h2 class="font-display text-lg font-semibold text-ink-900">Get a Quote</h2>
+        <div class="mt-6">
+          <EnquiryForm subject="Sell My Car" submitLabel="Get a Quote" />
+        </div>
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

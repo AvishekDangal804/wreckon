@@ -1,0 +1,20 @@
+---
+import Container from "./Container.astro";
+
+const points = [
+  "Quality-checked used parts",
+  "Straightforward enquiry process",
+  "Vehicles bought in line with current AU regulations",
+  "Licensing &amp; accreditation details — pending",
+];
+---
+<div class="border-y border-ink-600/10 bg-ink-100">
+  <Container class="grid grid-cols-1 gap-4 py-8 text-sm font-medium text-ink-700 sm:grid-cols-2 md:grid-cols-4">
+    {points.map((point) => (
+      <div class="flex items-center gap-2">
+        <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
+        <span set:html={point} />
+      </div>
+    ))}
+  </Container>
+</div>

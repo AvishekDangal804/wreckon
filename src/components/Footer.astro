@@ -1,0 +1,53 @@
+---
+import Container from "./Container.astro";
+import { siteConfig } from "../lib/siteConfig";
+
+const currentYear = new Date().getFullYear();
+---
+<footer class="bg-ink-950 text-ink-200 mt-24">
+  <Container class="grid grid-cols-1 gap-10 py-14 md:grid-cols-4">
+    <div>
+      <p class="font-display text-lg font-bold text-ink-50">{siteConfig.name}</p>
+      <p class="mt-2 text-sm text-ink-400">{siteConfig.tagline}</p>
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold text-ink-50">Explore</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href="/services" class="hover:text-amber-400">Services</a></li>
+        <li><a href="/parts" class="hover:text-amber-400">Used Parts</a></li>
+        <li><a href="/makes" class="hover:text-amber-400">Browse by Make</a></li>
+        <li><a href="/sell-your-car" class="hover:text-amber-400">Sell Your Car</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold text-ink-50">Company</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href="/about" class="hover:text-amber-400">About</a></li>
+        <li><a href="/faq" class="hover:text-amber-400">FAQ</a></li>
+        <li><a href="/contact" class="hover:text-amber-400">Contact</a></li>
+        <li><a href="/privacy" class="hover:text-amber-400">Privacy Policy</a></li>
+        <li><a href="/terms" class="hover:text-amber-400">Terms &amp; Conditions</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold text-ink-50">Contact</p>
+      <ul class="mt-3 space-y-2 text-sm">
+        <li><a href={siteConfig.phone.href} class="hover:text-amber-400">{siteConfig.phone.display}</a></li>
+        <li><a href={`mailto:${siteConfig.email}`} class="hover:text-amber-400">{siteConfig.email}</a></li>
+        <li class="text-ink-400">
+          {siteConfig.address.street}, {siteConfig.address.suburb} {siteConfig.address.state} {siteConfig.address.postcode}
+        </li>
+      </ul>
+    </div>
+  </Container>
+
+  <div class="border-t border-ink-800 py-6">
+    <Container class="flex flex-col items-center justify-between gap-2 text-xs text-ink-400 md:flex-row">
+      <p>&copy; {currentYear} {siteConfig.name}. All rights reserved.</p>
+      <p>Site content is a preview build pending final business details.</p>
+    </Container>
+  </div>
+</footer>

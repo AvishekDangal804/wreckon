@@ -1,0 +1,50 @@
+---
+interface Cta {
+  label: string;
+  href: string;
+}
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle: string;
+  primaryCta: Cta;
+  secondaryCta?: Cta;
+}
+const { eyebrow, title, subtitle, primaryCta, secondaryCta } = Astro.props;
+---
+<section class="relative overflow-hidden bg-ink-950 text-ink-50">
+  <div
+    class="pointer-events-none absolute inset-0 opacity-20"
+    style="background-image: radial-gradient(circle at 20% 20%, var(--color-amber-500) 0, transparent 45%), radial-gradient(circle at 80% 70%, var(--color-amber-400) 0, transparent 40%);"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
+    {eyebrow && (
+      <p class="text-sm font-semibold uppercase tracking-widest text-amber-400">{eyebrow}</p>
+    )}
+    <h1 class="mt-4 max-w-2xl font-display text-4xl font-bold leading-tight md:text-6xl">
+      {title}
+    </h1>
+    <p class="mt-6 max-w-xl text-lg text-ink-200">
+      {subtitle}
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <a
+        href={primaryCta.href}
+        class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
+      >
+        {primaryCta.label}
+      </a>
+      {secondaryCta && (
+        <a
+          href={secondaryCta.href}
+          class="inline-flex items-center justify-center rounded-full border border-ink-600 px-6 py-3 text-sm font-semibold text-ink-50 hover:border-amber-400 hover:text-amber-400 transition-colors"
+        >
+          {secondaryCta.label}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

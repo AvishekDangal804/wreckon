@@ -1,0 +1,97 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import Container from "../components/Container.astro";
+import Card from "../components/Card.astro";
+
+const services = await getCollection("services");
+const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
+const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular);
+---
+<BaseLayout
+  title="Home"
+  description="WRECKON is an Australian auto wrecker and used parts supplier — browse parts by category or vehicle make, or get a quote for your car."
+>
+  <Hero
+    eyebrow="Australian Auto Wreckers"
+    title="Quality used parts. A straightforward process."
+    subtitle="Browse used parts by category or vehicle make, or get a quote to sell your car. We'll help you find what you need."
+    primaryCta={{ label: "Browse Parts", href: "/parts" }}
+    secondaryCta={{ label: "Get a Quote", href: "/sell-your-car" }}
+  />
+
+  <TrustStrip />
+
+  <Container class="py-20">
+    <h2 class="font-display text-3xl font-bold text-ink-900">Our Services</h2>
+    <p class="mt-2 max-w-xl text-ink-600">From selling your car to sourcing used parts, here's how we can help.</p>
+
+    <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {services.map((service) => (
+        <Card
+          title={service.data.name}
+          blurb={service.data.summary}
+          href={`/services/${service.id}`}
+        />
+      ))}
+    </div>
+  </Container>
+
+  <div class="bg-ink-100 py-20">
+    <Container>
+      <h2 class="font-display text-3xl font-bold text-ink-900">Used Parts by Category</h2>
+      <p class="mt-2 max-w-xl text-ink-600">A sample of the part categories we stock. Tell us what you need and we'll check availability.</p>
+
+      <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {partsCategories.map((category) => (
+          <Card
+            title={category.data.name}
+            blurb={category.data.blurb}
+            href={`/parts/${category.id}`}
+          />
+        ))}
+      </div>
+
+      <a href="/parts" class="mt-8 inline-block text-sm font-semibold text-amber-600 hover:text-amber-500">
+        View all categories &rarr;
+      </a>
+    </Container>
+  </div>
+
+  <Container class="py-20">
+    <h2 class="font-display text-3xl font-bold text-ink-900">Browse by Make</h2>
+    <p class="mt-2 max-w-xl text-ink-600">A sample of the makes we commonly wreck for parts.</p>
+
+    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      {popularMakes.map((make) => (
+        <a
+          href={`/makes/${make.id}`}
+          class="flex items-center justify-center rounded-xl border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+        >
+          {make.data.name}
+        </a>
+      ))}
+    </div>
+
+    <a href="/makes" class="mt-8 inline-block text-sm font-semibold text-amber-600 hover:text-amber-500">
+      View all makes &rarr;
+    </a>
+  </Container>
+
+  <div class="bg-ink-950 py-20 text-center text-ink-50">
+    <Container>
+      <h2 class="font-display text-3xl font-bold">Can't find what you're after?</h2>
+      <p class="mx-auto mt-3 max-w-xl text-ink-200">
+        Send us your part or vehicle details directly and we'll check what's available.
+      </p>
+      <a
+        href="/contact"
+        class="mt-8 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300"
+      >
+        Contact Us
+      </a>
+    </Container>
+  </div>
+</BaseLayout>
