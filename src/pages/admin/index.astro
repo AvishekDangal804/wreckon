@@ -17,6 +17,44 @@ type Row = typeof enquiries.$inferSelect;
 let rows: Row[] = [];
 const photosByEnquiry = new Map<number, string[]>();
 
+// Local prototype phase: no DATABASE_URL yet. Show clearly-labelled sample
+// rows instead of a real query, purely so the table layout can be reviewed —
+// never shown once a real database is configured.
+const MOCK_ROWS: Row[] = [
+  {
+    id: -1,
+    type: "parts_request",
+    status: "new",
+    createdAt: new Date(),
+    customerName: "[Sample] Jordan Lee",
+    customerPhone: "0400 000 111",
+    customerEmail: "jordan@example.com",
+    details: { vehicleMake: "Toyota", vehicleModel: "Hilux", vehicleYear: "2016", partName: "Front bumper" },
+  },
+  {
+    id: -2,
+    type: "vehicle_valuation",
+    status: "contacted",
+    createdAt: new Date(Date.now() - 86400000),
+    customerName: "[Sample] Priya Nair",
+    customerPhone: "0400 000 222",
+    customerEmail: "priya@example.com",
+    details: { vehicleMake: "Mazda", vehicleModel: "3", vehicleYear: "2012", condition: "Fair", drivable: "Yes" },
+  },
+  {
+    id: -3,
+    type: "general_contact",
+    status: "closed",
+    createdAt: new Date(Date.now() - 172800000),
+    customerName: "[Sample] Sam Okafor",
+    customerPhone: "0400 000 333",
+    customerEmail: "sam@example.com",
+    details: { message: "Do you take trade-ins on wrecked vans?" },
+  },
+];
+
+const usingMockData = !db;
+
 if (db) {
   const conditions = [];
   if (typeFilter && (TYPES as readonly string[]).includes(typeFilter)) {
@@ -41,6 +79,10 @@ if (db) {
       photosByEnquiry.set(p.enquiryId, list);
     }
   }
+} else {
+  rows = MOCK_ROWS.filter(
+    (row) => (!typeFilter || row.type === typeFilter) && (!statusFilter || row.status === statusFilter)
+  );
 }
 ---
 <BaseLayout title="Admin — Enquiries" description="WRECKON admin enquiries list." noindex>
@@ -52,13 +94,14 @@ if (db) {
       </form>
     </div>
 
-    {!db ? (
-      <p class="mt-6 rounded-lg bg-ink-100 p-4 text-sm text-ink-700">
-        Database not configured yet — set <code>DATABASE_URL</code> to enable persisted enquiries. See the README.
+    {usingMockData && (
+      <p class="mt-6 rounded-lg bg-amber-100 p-4 text-sm text-amber-900">
+        <strong>Showing sample data</strong> — <code>DATABASE_URL</code> isn't set yet, so these rows aren't real
+        enquiries. This is only here so the layout can be reviewed locally. See the README.
       </p>
-    ) : (
-      <>
-        <form class="mt-6 flex flex-wrap gap-3 text-sm" method="GET">
+    )}
+
+    <form class="mt-6 flex flex-wrap gap-3 text-sm" method="GET">
           <select name="type" class="rounded-md border border-ink-600/30 bg-white px-3 py-2">
             <option value="">All types</option>
             {TYPES.map((t) => (
@@ -113,7 +156,5 @@ if (db) {
           </table>
           {rows.length === 0 && <p class="mt-6 text-ink-500">No enquiries yet.</p>}
         </div>
-      </>
-    )}
   </Container>
 </BaseLayout>
