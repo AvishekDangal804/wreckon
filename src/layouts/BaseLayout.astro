@@ -9,8 +9,9 @@ import { siteConfig } from "../lib/siteConfig";
 interface Props {
   title: string;
   description: string;
+  noindex?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const pageTitle = `${title} | ${siteConfig.name}`;
 const canonicalURL = new URL(Astro.url.pathname, siteConfig.url);
 
@@ -38,6 +39,7 @@ const localBusinessSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonicalURL} />
+    {noindex && <meta name="robots" content="noindex" />}
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />

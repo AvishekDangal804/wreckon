@@ -1,0 +1,39 @@
+---
+import { siteConfig } from "../lib/siteConfig";
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+  dark?: boolean;
+}
+const { items, dark = false } = Astro.props;
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: items.map((item, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: item.label,
+    ...(item.href ? { item: new URL(item.href, siteConfig.url).toString() } : {}),
+  })),
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+<nav aria-label="Breadcrumb" class:list={["text-sm", dark ? "text-ink-300" : "text-ink-500"]}>
+  <ol class="flex flex-wrap items-center gap-1">
+    {items.map((item, index) => (
+      <li class="flex items-center gap-1">
+        {index > 0 && <span aria-hidden="true">/</span>}
+        {item.href ? (
+          <a href={item.href} class="hover:text-amber-500">{item.label}</a>
+        ) : (
+          <span class:list={[dark ? "text-ink-50" : "text-ink-800"]} aria-current="page">{item.label}</span>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

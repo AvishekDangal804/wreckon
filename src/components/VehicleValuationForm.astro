@@ -1,8 +1,9 @@
 ---
 interface Props {
   submitLabel?: string;
+  defaultVehicleMake?: string;
 }
-const { submitLabel = "Get a Quote" } = Astro.props;
+const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
 ---
 <form class="enquiry-form grid grid-cols-1 gap-4 md:grid-cols-2" method="POST" action="/api/enquiry">
   <input type="hidden" name="type" value="vehicle_valuation" />
@@ -30,7 +31,7 @@ const { submitLabel = "Get a Quote" } = Astro.props;
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Make *
-    <input required name="vehicleMake" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Model *

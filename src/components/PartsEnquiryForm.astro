@@ -1,8 +1,10 @@
 ---
 interface Props {
   submitLabel?: string;
+  defaultVehicleMake?: string;
+  defaultPartName?: string;
 }
-const { submitLabel = "Request This Part" } = Astro.props;
+const { submitLabel = "Request This Part", defaultVehicleMake = "", defaultPartName = "" } = Astro.props;
 ---
 <form class="enquiry-form grid grid-cols-1 gap-4 md:grid-cols-2" method="POST" action="/api/enquiry">
   <input type="hidden" name="type" value="parts_request" />
@@ -30,7 +32,7 @@ const { submitLabel = "Request This Part" } = Astro.props;
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Make *
-    <input required name="vehicleMake" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Model *
@@ -55,7 +57,7 @@ const { submitLabel = "Request This Part" } = Astro.props;
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Part Required *
-    <input required name="partName" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="partName" type="text" value={defaultPartName} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Part Description
