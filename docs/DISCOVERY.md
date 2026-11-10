@@ -181,7 +181,7 @@ Blocking or near-blocking items before build starts:
 
 No API endpoints, credentials, or integration behaviour are invented here. This describes architecture only, pending official Hazarlink documentation and access.
 
-- Integration lives behind a single isolated adapter layer: `src/lib/integrations/hazarlink/`, with a defined TypeScript interface describing what the site would need (e.g. `fetchStockLevels()`, `submitLead()`), but **not implemented** — stubbed and documented as pending.
+- Integration lives behind a single isolated adapter layer: `src/lib/integrations/hazarlink/`, with a defined TypeScript interface describing what the site would need (`fetchStockLevels()`, `submitLead()`) — **this interface and a stub client now exist** (throwing `HazarlinkNotConfiguredError` rather than faking data), but nothing calls it yet and no real endpoint/credential exists.
 - Likely integration points once docs exist:
   - **Inbound:** push website lead-form submissions (enquiry, request-a-part, sell-your-car) into Hazarlink's CRM/accounting, via webhook or API call.
   - **Outbound:** pull live stock/parts availability from Hazarlink's stock management system to eventually replace the static "request a part" flow with real inventory.

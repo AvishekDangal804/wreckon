@@ -16,8 +16,10 @@ before going live — see the on-site banner and `docs/DISCOVERY.md` §8 for the
 - **No photography** — hero/section visuals are intentionally plain (color/typography only) rather
   than stock or competitor images. Real photography is still needed.
 - **Privacy Policy and Terms pages are drafts**, clearly marked on-page as not legally reviewed.
-- **Hazarlink is not integrated.** `src/lib/integrations/hazarlink/` (not yet created) is reserved
-  for that work once Hazarlink provides real API docs/credentials — do not fabricate endpoints there.
+- **Hazarlink is not integrated.** `src/lib/integrations/hazarlink/` holds a typed adapter stub
+  (`fetchStockLevels`, `submitLead`) that throws rather than faking data — nothing in the app
+  calls it yet. Real implementation waits on Hazarlink's official API docs/credentials; see that
+  folder's README.
 - **Backend services below are optional and degrade gracefully.** None of them have real accounts
   set up yet — I can't create the Vercel Postgres/Neon, Vercel Blob, Cloudflare Turnstile, or
   Upstash accounts myself. The site works today without any of them; each one "activates" once
