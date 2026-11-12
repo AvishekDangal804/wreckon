@@ -11,11 +11,13 @@ import VehicleValuationForm from "../../components/VehicleValuationForm.astro";
 import vehicleRemovalPhoto from "../../assets/vehicle-removal.jpg";
 import sellYourCarPhoto from "../../assets/sell-your-car.jpg";
 import usedPartsPhoto from "../../assets/used-parts.jpg";
+import wreckingPhoto from "../../assets/wrecking.jpg";
 
 const serviceImages: Record<string, ImageMetadata> = {
   "vehicle-removal": vehicleRemovalPhoto,
   "sell-your-car": sellYourCarPhoto,
   "used-parts": usedPartsPhoto,
+  "wrecking": wreckingPhoto,
 };
 
 export async function getStaticPaths() {
