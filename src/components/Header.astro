@@ -1,7 +1,7 @@
 ---
 import Container from "./Container.astro";
 import Button from "./Button.astro";
-import { siteConfig } from "../lib/siteConfig";
+import Logo from "./Logo.astro";
 
 const navItems = [
   { label: "Services", href: "/services" },
@@ -14,9 +14,7 @@ const navItems = [
 ---
 <header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
   <Container class="flex items-center justify-between py-4">
-    <a href="/" class="font-display text-xl font-bold tracking-tight">
-      {siteConfig.name}
-    </a>
+    <Logo />
 
     <nav class="hidden lg:flex items-center gap-6">
       {navItems.map((item) => (

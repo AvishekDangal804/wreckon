@@ -1,6 +1,7 @@
 ---
 import Container from "./Container.astro";
 import Placeholder from "./Placeholder.astro";
+import Logo from "./Logo.astro";
 import { siteConfig } from "../lib/siteConfig";
 
 const currentYear = new Date().getFullYear();
@@ -8,7 +9,7 @@ const currentYear = new Date().getFullYear();
 <footer class="bg-ink-950 text-ink-200 mt-24">
   <Container class="grid grid-cols-1 gap-10 py-14 md:grid-cols-4">
     <div>
-      <p class="font-display text-lg font-bold text-ink-50">{siteConfig.name}</p>
+      <Logo />
       <p class="mt-2 text-sm text-ink-400">{siteConfig.tagline}</p>
     </div>
 
