@@ -22,15 +22,6 @@ const serviceImages: Record<string, ImageMetadata> = {
 
 const services = await getCollection("services");
 const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
-const popularMakes = (await getCollection("makes"))
-  .filter((m) => m.data.popular)
-  .sort((a, b) => a.data.name.localeCompare(b.data.name));
-
-const howItWorksSteps = [
-  { title: "Tell us what you need", body: "A part, or a vehicle you want to sell — give us the details." },
-  { title: "We check availability", body: "For parts requests, we check what we've got against your vehicle." },
-  { title: "We get back to you", body: "With pricing and next steps, by phone or email." },
-];
 ---
 <BaseLayout
   title="Home"
@@ -66,19 +57,6 @@ const howItWorksSteps = [
     </div>
   </Container>
 
-  <Container class="py-20">
-    <h2 class="font-display text-3xl font-bold text-ink-900">How It Works</h2>
-    <div class="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-ink-200 bg-ink-200 sm:grid-cols-3">
-      {howItWorksSteps.map((step, index) => (
-        <div class="bg-white p-6">
-          <span class="font-display text-3xl font-bold text-ink-200">{String(index + 1).padStart(2, "0")}</span>
-          <h3 class="mt-3 font-display text-lg font-bold text-ink-900">{step.title}</h3>
-          <p class="mt-2 text-sm text-ink-600">{step.body}</p>
-        </div>
-      ))}
-    </div>
-  </Container>
-
   <div class="bg-ink-100 py-20">
     <Container>
       <h2 class="flex flex-wrap items-center gap-3 font-display text-3xl font-bold text-ink-900">
@@ -103,30 +81,6 @@ const howItWorksSteps = [
       </a>
     </Container>
   </div>
-
-  <Container class="py-20">
-    <h2 class="flex flex-wrap items-center gap-3 font-display text-3xl font-bold text-ink-900">
-      Browse by Make
-      <Placeholder label="SAMPLE CONTENT" />
-    </h2>
-    <p class="mt-2 max-w-xl text-ink-600">A sample of the makes we commonly wreck for parts.</p>
-
-    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-      {popularMakes.map((make) => (
-        <a
-          href={`/makes/${make.id}`}
-          class="flex flex-col items-center justify-center gap-2 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
-        >
-          {make.data.name}
-          <Placeholder label="SAMPLE CONTENT" />
-        </a>
-      ))}
-    </div>
-
-    <a href="/makes" class="mt-8 inline-block text-sm font-semibold text-amber-600 hover:text-amber-500">
-      View all makes &rarr;
-    </a>
-  </Container>
 
   <div class="bg-ink-950 py-20 text-center text-ink-50">
     <Container>
