@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import Button from "./Button.astro";
+import heroYard from "../assets/hero-yard.jpg";
 
 interface Cta {
   label: string;
@@ -15,11 +17,16 @@ interface Props {
 const { eyebrow, title, subtitle, primaryCta, secondaryCta } = Astro.props;
 ---
 <section class="relative overflow-hidden bg-ink-950 text-ink-50">
-  <div
-    class="pointer-events-none absolute inset-0 opacity-20"
-    style="background-image: radial-gradient(circle at 20% 20%, var(--color-amber-500) 0, transparent 45%), radial-gradient(circle at 80% 70%, var(--color-amber-400) 0, transparent 40%);"
-  >
-  </div>
+  <Image
+    src={heroYard}
+    alt="WRECKON vehicle wrecking yard"
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[640, 1024, 1600, 2000]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+  />
+  <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/85 to-ink-950/40"></div>
 
   <div class="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
     {eyebrow && (

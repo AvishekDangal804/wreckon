@@ -13,8 +13,10 @@ before going live — see the on-site banner and `docs/DISCOVERY.md` §8 for the
 - **Vehicle makes, parts categories and service copy are starter/sample content**
   (`src/content/makes/`, `src/content/parts-categories/`, `src/content/services/`), based on
   patterns common in this industry, not WRECKON's actual confirmed lists.
-- **No photography** — hero/section visuals are intentionally plain (color/typography only) rather
-  than stock or competitor images. Real photography is still needed.
+- **Homepage hero now uses a real, manager-approved photo** (`src/assets/hero-yard.jpg`) of the
+  vehicle wrecking yard. Every other section is still intentionally plain (color/typography only)
+  rather than stock or competitor images — real photography for services/parts categories is
+  still needed (see the shot list discussed with the client).
 - **Privacy Policy and Terms pages are drafts**, clearly marked on-page as not legally reviewed.
 - **Hazarlink is not integrated.** `src/lib/integrations/hazarlink/` holds a typed adapter stub
   (`fetchStockLevels`, `submitLead`) that throws rather than faking data — nothing in the app
