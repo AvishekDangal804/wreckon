@@ -1,13 +1,28 @@
 ---
+import { Image } from "astro:assets";
 import Container from "./Container.astro";
 import Placeholder from "./Placeholder.astro";
 import Logo from "./Logo.astro";
 import { siteConfig } from "../lib/siteConfig";
+import footerAccent from "../assets/footer-accent.jpg";
 
 const currentYear = new Date().getFullYear();
 ---
-<footer class="bg-ink-950 text-ink-200 mt-24">
-  <Container class="grid grid-cols-1 gap-10 py-14 md:grid-cols-4">
+<footer class="relative overflow-hidden bg-ink-950 text-ink-200 mt-24">
+  <div class="pointer-events-none absolute bottom-0 right-0 h-64 w-64 overflow-hidden md:h-80 md:w-80" aria-hidden="true">
+    <Image
+      src={footerAccent}
+      alt=""
+      class="h-full w-full object-cover opacity-25"
+      widths={[400, 640]}
+      sizes="320px"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-l from-transparent via-ink-950/70 to-ink-950"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-transparent via-ink-950/70 to-ink-950"></div>
+  </div>
+
+  <Container class="relative grid grid-cols-1 gap-10 py-14 md:grid-cols-4">
     <div>
       <Logo />
       <p class="mt-2 text-sm text-ink-400">{siteConfig.tagline}</p>
