@@ -6,11 +6,13 @@ import TrustStrip from "../components/TrustStrip.astro";
 import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
+import Placeholder from "../components/Placeholder.astro";
 
 const services = await getCollection("services");
 const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
-const allMakes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCompare(b.data.name));
-const popularMakes = allMakes.filter((m) => m.data.popular);
+const popularMakes = (await getCollection("makes"))
+  .filter((m) => m.data.popular)
+  .sort((a, b) => a.data.name.localeCompare(b.data.name));
 
 const howItWorksSteps = [
   { title: "Tell us what you need", body: "A part, or a vehicle you want to sell — give us the details." },
@@ -25,24 +27,19 @@ const howItWorksSteps = [
   <Hero
     eyebrow="Australian Auto Wreckers"
     title="Quality used parts. A straightforward process."
-    subtitle="Browse used parts by category or vehicle make, or get a quote to sell your car. We'll help you find what you need."
-    primaryCta={{ label: "Browse Parts", href: "/parts" }}
-    secondaryCta={{ label: "Get a Quote", href: "/sell-your-car" }}
+    subtitle="Tell us about the part you need or the car you want to sell, and we'll get back to you with next steps."
+    primaryCta={{ label: "Contact Us", href: "/contact" }}
+    secondaryCta={{ label: "Browse Parts", href: "/parts" }}
   />
 
   <TrustStrip />
 
-  <div class="overflow-hidden border-y border-ink-800 bg-ink-950 py-4">
-    <div class="flex animate-[marquee_30s_linear_infinite] gap-10 whitespace-nowrap font-mono text-sm text-ink-300">
-      {[...allMakes, ...allMakes].map((make) => (
-        <span>{make.data.name}</span>
-      ))}
-    </div>
-  </div>
-
   <Container class="py-20">
     <h2 class="font-display text-3xl font-bold text-ink-900">Our Services</h2>
-    <p class="mt-2 max-w-xl text-ink-600">From selling your car to sourcing used parts, here's how we can help.</p>
+    <p class="mt-2 max-w-xl text-ink-600">
+      From selling your car to sourcing used parts, here's how we can help.
+      Descriptions below are preliminary, pending final confirmation from the business.
+    </p>
 
     <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {services.map((service) => (
@@ -70,7 +67,10 @@ const howItWorksSteps = [
 
   <div class="bg-ink-100 py-20">
     <Container>
-      <h2 class="font-display text-3xl font-bold text-ink-900">Used Parts by Category</h2>
+      <h2 class="flex flex-wrap items-center gap-3 font-display text-3xl font-bold text-ink-900">
+        Used Parts by Category
+        <Placeholder label="SAMPLE CONTENT" />
+      </h2>
       <p class="mt-2 max-w-xl text-ink-600">A sample of the part categories we stock. Tell us what you need and we'll check availability.</p>
 
       <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -79,6 +79,7 @@ const howItWorksSteps = [
             title={category.data.name}
             blurb={category.data.blurb}
             href={`/parts/${category.id}`}
+            badge="SAMPLE CONTENT"
           />
         ))}
       </div>
@@ -90,16 +91,20 @@ const howItWorksSteps = [
   </div>
 
   <Container class="py-20">
-    <h2 class="font-display text-3xl font-bold text-ink-900">Browse by Make</h2>
+    <h2 class="flex flex-wrap items-center gap-3 font-display text-3xl font-bold text-ink-900">
+      Browse by Make
+      <Placeholder label="SAMPLE CONTENT" />
+    </h2>
     <p class="mt-2 max-w-xl text-ink-600">A sample of the makes we commonly wreck for parts.</p>
 
     <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
       {popularMakes.map((make) => (
         <a
           href={`/makes/${make.id}`}
-          class="flex items-center justify-center rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+          class="flex flex-col items-center justify-center gap-2 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
         >
           {make.data.name}
+          <Placeholder label="SAMPLE CONTENT" />
         </a>
       ))}
     </div>

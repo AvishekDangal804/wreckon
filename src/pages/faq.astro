@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
+import PlaceholderNotice from "../components/PlaceholderNotice.astro";
 
 const faqs = [
   {
@@ -36,7 +37,12 @@ const faqSchema = {
   <Container class="py-16">
     <div class="max-w-2xl">
       <h1 class="font-display text-4xl font-bold text-ink-900">Frequently Asked Questions</h1>
-      <p class="mt-3 text-ink-600">A starter set of FAQs — to be expanded with real, business-specific answers.</p>
+
+      <div class="mt-6">
+        <PlaceholderNotice label="SAMPLE CONTENT">
+          A starter set of generic FAQs — to be expanded/corrected with real, business-specific answers.
+        </PlaceholderNotice>
+      </div>
 
       <dl class="mt-10 space-y-8">
         {faqs.map((item) => (

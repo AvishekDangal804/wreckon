@@ -1,15 +1,16 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
+import PlaceholderNotice from "../components/PlaceholderNotice.astro";
 ---
 <BaseLayout title="Privacy Policy" description="Privacy policy for the WRECKON website.">
   <Container class="py-16">
     <div class="max-w-2xl">
-      <div class="rounded-sm border border-amber-400 bg-amber-50 p-4 text-sm text-amber-700">
+      <PlaceholderNotice label="CLIENT CONTENT REQUIRED">
         <strong>Draft — not legally reviewed.</strong> This placeholder must be reviewed by the business
         (and ideally a legal advisor) before the site goes live. It does not yet reflect WRECKON's actual
         data handling practices.
-      </div>
+      </PlaceholderNotice>
 
       <h1 class="mt-8 font-display text-4xl font-bold text-ink-900">Privacy Policy</h1>
       <div class="content mt-6">

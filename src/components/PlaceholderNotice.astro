@@ -1,0 +1,12 @@
+---
+import Placeholder from "./Placeholder.astro";
+
+interface Props {
+  label: "SAMPLE CONTENT" | "TO BE CONFIRMED" | "PENDING CLIENT CONFIRMATION" | "CLIENT CONTENT REQUIRED";
+}
+const { label } = Astro.props;
+---
+<div class="rounded-sm border border-amber-400 bg-amber-50 p-4 text-sm text-amber-700">
+  <Placeholder label={label} />
+  <div class="mt-2"><slot /></div>
+</div>

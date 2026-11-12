@@ -1,0 +1,9 @@
+---
+interface Props {
+  label: "SAMPLE CONTENT" | "TO BE CONFIRMED" | "PENDING CLIENT CONFIRMATION" | "CLIENT CONTENT REQUIRED";
+}
+const { label } = Astro.props;
+---
+<span class="inline-flex items-center rounded-sm bg-amber-200 px-1.5 py-0.5 align-middle text-[10px] font-semibold uppercase tracking-wide text-ink-900">
+  {label}
+</span>

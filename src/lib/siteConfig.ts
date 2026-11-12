@@ -3,6 +3,13 @@
  * Every value here is a stand-in, not a real detail — see docs/DISCOVERY.md §8.
  * Replace before launch.
  */
+
+// Flips to true once the business confirms its real contact/licensing details.
+// Gates whether contact info renders as functional links / gets published as
+// LocalBusiness structured data — see BaseLayout.astro, Header.astro,
+// Footer.astro, StickyCallButton.astro, contact.astro.
+export const BUSINESS_INFO_CONFIRMED = false;
+
 export const siteConfig = {
   name: "WRECKON",
   tagline: "Trusted Auto Wreckers & Used Parts",
@@ -16,15 +23,15 @@ export const siteConfig = {
   email: "info@wreckon.com.au",
 
   address: {
-    street: "[Address pending]",
+    street: "Street address",
     suburb: "Melbourne",
     state: "VIC",
-    postcode: "[Postcode pending]",
+    postcode: "Postcode",
   },
 
   hours: [
-    { days: "Mon–Fri", time: "[Hours pending]" },
-    { days: "Sat", time: "[Hours pending]" },
+    { days: "Mon–Fri", time: "Hours" },
+    { days: "Sat", time: "Hours" },
     { days: "Sun", time: "Closed" },
   ],
 

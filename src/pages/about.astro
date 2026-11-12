@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
+import PlaceholderNotice from "../components/PlaceholderNotice.astro";
 ---
 <BaseLayout
   title="About Us"
@@ -10,14 +11,16 @@ import Button from "../components/Button.astro";
   <Container class="py-16">
     <div class="max-w-2xl">
       <h1 class="font-display text-4xl font-bold text-ink-900">About WRECKON</h1>
+
+      <PlaceholderNotice label="CLIENT CONTENT REQUIRED">
+        Real company history, team details and photography will go here once the business supplies them.
+        Nothing below is invented.
+      </PlaceholderNotice>
+
       <div class="content mt-6">
         <p>
-          WRECKON is an Australian auto wrecking and used parts business. This page is a placeholder —
-          real company history, team details and photos will go here once provided.
-        </p>
-        <p>
-          In the meantime, if you'd like to know more about how we operate, get in touch and we'll
-          answer any questions directly.
+          WRECKON is an Australian auto wrecking and used parts business. If you'd like to know more
+          about how we operate, get in touch and we'll answer any questions directly.
         </p>
       </div>
       <Button href="/contact" class="mt-8">Contact Us</Button>
