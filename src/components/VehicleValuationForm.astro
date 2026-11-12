@@ -1,4 +1,6 @@
 ---
+import Button from "./Button.astro";
+
 interface Props {
   submitLabel?: string;
   defaultVehicleMake?: string;
@@ -18,37 +20,37 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Full Name *
-    <input required name="name" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="name" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Contact Number *
-    <input required name="phone" type="tel" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="phone" type="tel" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Email Address *
-    <input required name="email" type="email" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="email" type="email" class="field-input" />
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Make *
-    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Model *
-    <input required name="vehicleModel" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleModel" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Year *
-    <input required name="vehicleYear" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleYear" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Location *
-    <input required name="location" type="text" placeholder="Suburb" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="location" type="text" placeholder="Suburb" class="field-input" />
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Condition *
-    <select required name="condition" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm">
+    <select required name="condition" class="field-input">
       <option value="">Select condition</option>
       <option value="Excellent">Excellent</option>
       <option value="Good">Good</option>
@@ -59,7 +61,7 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Is It Drivable? *
-    <select required name="drivable" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm">
+    <select required name="drivable" class="field-input">
       <option value="">Select one</option>
       <option value="Yes">Yes</option>
       <option value="No">No</option>
@@ -67,7 +69,7 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Transmission
-    <select name="transmission" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm">
+    <select name="transmission" class="field-input">
       <option value="">Not sure / not applicable</option>
       <option value="Automatic">Automatic</option>
       <option value="Manual">Manual</option>
@@ -76,7 +78,7 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Additional Information
-    <textarea name="additionalInfo" rows="3" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"></textarea>
+    <textarea name="additionalInfo" rows="3" class="field-input"></textarea>
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
@@ -86,7 +88,7 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
       type="file"
       accept="image/*"
       multiple
-      class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"
+      class="field-input"
     />
     <span class="text-xs text-ink-500">Images only, up to 8MB each.</span>
   </label>
@@ -95,12 +97,7 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
     {Boolean(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) && (
       <div class="cf-turnstile mb-4" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}></div>
     )}
-    <button
-      type="submit"
-      class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-    >
-      {submitLabel}
-    </button>
+    <Button type="submit">{submitLabel}</Button>
     <p class="form-status mt-3 text-sm" role="status"></p>
   </div>
 </form>

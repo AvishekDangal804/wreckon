@@ -95,26 +95,26 @@ if (db) {
     </div>
 
     {usingMockData && (
-      <p class="mt-6 rounded-lg bg-amber-100 p-4 text-sm text-amber-900">
+      <p class="mt-6 rounded-sm bg-amber-100 p-4 text-sm text-amber-900">
         <strong>Showing sample data</strong> — <code>DATABASE_URL</code> isn't set yet, so these rows aren't real
         enquiries. This is only here so the layout can be reviewed locally. See the README.
       </p>
     )}
 
     <form class="mt-6 flex flex-wrap gap-3 text-sm" method="GET">
-          <select name="type" class="rounded-md border border-ink-600/30 bg-white px-3 py-2">
+          <select name="type" class="field-input">
             <option value="">All types</option>
             {TYPES.map((t) => (
               <option value={t} selected={typeFilter === t}>{t}</option>
             ))}
           </select>
-          <select name="status" class="rounded-md border border-ink-600/30 bg-white px-3 py-2">
+          <select name="status" class="field-input">
             <option value="">All statuses</option>
             {STATUSES.map((s) => (
               <option value={s} selected={statusFilter === s}>{s}</option>
             ))}
           </select>
-          <button type="submit" class="rounded-md bg-ink-900 px-4 py-2 text-white">Filter</button>
+          <button type="submit" class="rounded-sm bg-ink-900 px-4 py-2 text-white">Filter</button>
         </form>
 
         <div class="mt-6 overflow-x-auto">

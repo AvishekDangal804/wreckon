@@ -1,5 +1,6 @@
 ---
 import Container from "./Container.astro";
+import Button from "./Button.astro";
 import { siteConfig } from "../lib/siteConfig";
 
 const navItems = [
@@ -32,17 +33,12 @@ const navItems = [
       >
         Sell Your Car
       </a>
-      <a
-        href={siteConfig.phone.href}
-        class="inline-flex items-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-      >
-        Call {siteConfig.phone.display}
-      </a>
+      <Button href={siteConfig.phone.href} size="sm">Call {siteConfig.phone.display}</Button>
     </div>
 
     <button
       id="menu-toggle"
-      class="md:hidden inline-flex items-center justify-center rounded-md p-2 text-ink-200 hover:text-amber-400"
+      class="md:hidden inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
       aria-label="Toggle menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
@@ -56,19 +52,14 @@ const navItems = [
   <nav id="mobile-menu" class="hidden md:hidden border-t border-ink-700 bg-ink-950">
     <Container class="flex flex-col gap-1 py-3">
       {navItems.map((item) => (
-        <a href={item.href} class="rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
+        <a href={item.href} class="rounded-sm px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
           {item.label}
         </a>
       ))}
-      <a href="/sell-your-car" class="rounded-md px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
+      <a href="/sell-your-car" class="rounded-sm px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
         Sell Your Car
       </a>
-      <a
-        href={siteConfig.phone.href}
-        class="mt-2 inline-flex items-center justify-center gap-2 rounded-full bg-amber-400 px-4 py-2 text-sm font-semibold text-ink-950"
-      >
-        Call {siteConfig.phone.display}
-      </a>
+      <Button href={siteConfig.phone.href} size="sm" class="mt-2">Call {siteConfig.phone.display}</Button>
     </Container>
   </nav>
 </header>

@@ -17,7 +17,7 @@ const makes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCo
       {makes.map((make) => (
         <a
           href={`/makes/${make.id}`}
-          class="flex items-center justify-center rounded-xl border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+          class="flex items-center justify-center rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
         >
           {make.data.name}
         </a>

@@ -1,4 +1,6 @@
 ---
+import Button from "./Button.astro";
+
 interface Props {
   submitLabel?: string;
   defaultVehicleMake?: string;
@@ -19,32 +21,32 @@ const { submitLabel = "Request This Part", defaultVehicleMake = "", defaultPartN
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Full Name *
-    <input required name="name" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="name" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Mobile Number *
-    <input required name="phone" type="tel" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="phone" type="tel" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Email Address *
-    <input required name="email" type="email" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="email" type="email" class="field-input" />
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Make *
-    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Vehicle Model *
-    <input required name="vehicleModel" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleModel" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Year *
-    <input required name="vehicleYear" type="text" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="vehicleYear" type="text" class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
     Transmission
-    <select name="transmission" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm">
+    <select name="transmission" class="field-input">
       <option value="">Not sure / not applicable</option>
       <option value="Automatic">Automatic</option>
       <option value="Manual">Manual</option>
@@ -52,20 +54,20 @@ const { submitLabel = "Request This Part", defaultVehicleMake = "", defaultPartN
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Additional Vehicle Info
-    <input name="vehicleInfo" type="text" placeholder="e.g. badge, engine size, series" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input name="vehicleInfo" type="text" placeholder="e.g. badge, engine size, series" class="field-input" />
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Part Required *
-    <input required name="partName" type="text" value={defaultPartName} class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm" />
+    <input required name="partName" type="text" value={defaultPartName} class="field-input" />
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Part Description
-    <textarea name="partDescription" rows="3" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"></textarea>
+    <textarea name="partDescription" rows="3" class="field-input"></textarea>
   </label>
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
     Additional Comments
-    <textarea name="comments" rows="2" class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"></textarea>
+    <textarea name="comments" rows="2" class="field-input"></textarea>
   </label>
 
   <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
@@ -75,7 +77,7 @@ const { submitLabel = "Request This Part", defaultVehicleMake = "", defaultPartN
       type="file"
       accept="image/*"
       multiple
-      class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"
+      class="field-input"
     />
     <span class="text-xs text-ink-500">Images only, up to 8MB each.</span>
   </label>
@@ -84,12 +86,7 @@ const { submitLabel = "Request This Part", defaultVehicleMake = "", defaultPartN
     {Boolean(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) && (
       <div class="cf-turnstile mb-4" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}></div>
     )}
-    <button
-      type="submit"
-      class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-    >
-      {submitLabel}
-    </button>
+    <Button type="submit">{submitLabel}</Button>
     <p class="form-status mt-3 text-sm" role="status"></p>
   </div>
 </form>

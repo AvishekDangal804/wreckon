@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
+import Button from "../../components/Button.astro";
 import { isAdminConfigured } from "../../lib/adminSession";
 
 export const prerender = false;
@@ -17,23 +18,13 @@ const hasError = Astro.url.searchParams.has("error");
         <form method="POST" action="/api/admin/login" class="mt-6 flex flex-col gap-4">
           <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
             Password
-            <input
-              required
-              name="password"
-              type="password"
-              class="rounded-md border border-ink-600/30 bg-white px-3 py-2 text-sm"
-            />
+            <input required name="password" type="password" class="field-input" />
           </label>
           {hasError && <p class="text-sm text-red-700">Incorrect password.</p>}
-          <button
-            type="submit"
-            class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-          >
-            Log In
-          </button>
+          <Button type="submit">Log In</Button>
         </form>
       ) : (
-        <p class="mt-6 rounded-lg bg-ink-100 p-4 text-sm text-ink-700">
+        <p class="mt-6 rounded-sm bg-ink-100 p-4 text-sm text-ink-700">
           Admin access isn't configured yet — set <code>ADMIN_PASSWORD</code> and <code>SESSION_SECRET</code> in
           your environment variables to enable it. See the README.
         </p>

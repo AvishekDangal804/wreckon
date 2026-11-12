@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
+import Button from "../components/Button.astro";
 ---
 <BaseLayout
   title="How It Works"
@@ -17,12 +18,7 @@ import Container from "../components/Container.astro";
           <li><strong>2. We get back to you</strong> with a quote.</li>
           <li><strong>3. If you accept</strong>, we arrange pick-up and payment by bank transfer or EFT.</li>
         </ol>
-        <a
-          href="/sell-your-car"
-          class="mt-6 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-        >
-          Get a Quote
-        </a>
+        <Button href="/sell-your-car" class="mt-6">Get a Quote</Button>
       </div>
 
       <div>
@@ -32,12 +28,7 @@ import Container from "../components/Container.astro";
           <li><strong>2. We check availability</strong> against what we've got.</li>
           <li><strong>3. We get back to you</strong> with pricing and next steps.</li>
         </ol>
-        <a
-          href="/parts/request"
-          class="mt-6 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-        >
-          Request a Part
-        </a>
+        <Button href="/parts/request" class="mt-6">Request a Part</Button>
       </div>
     </div>
   </Container>

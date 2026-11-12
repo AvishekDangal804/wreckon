@@ -5,10 +5,18 @@ import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
 import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
+import Button from "../components/Button.astro";
 
 const services = await getCollection("services");
 const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
-const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular);
+const allMakes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const popularMakes = allMakes.filter((m) => m.data.popular);
+
+const howItWorksSteps = [
+  { title: "Tell us what you need", body: "A part, or a vehicle you want to sell — give us the details." },
+  { title: "We check availability", body: "For parts requests, we check what we've got against your vehicle." },
+  { title: "We get back to you", body: "With pricing and next steps, by phone or email." },
+];
 ---
 <BaseLayout
   title="Home"
@@ -24,6 +32,14 @@ const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular
 
   <TrustStrip />
 
+  <div class="overflow-hidden border-y border-ink-800 bg-ink-950 py-4">
+    <div class="flex animate-[marquee_30s_linear_infinite] gap-10 whitespace-nowrap font-mono text-sm text-ink-300">
+      {[...allMakes, ...allMakes].map((make) => (
+        <span>{make.data.name}</span>
+      ))}
+    </div>
+  </div>
+
   <Container class="py-20">
     <h2 class="font-display text-3xl font-bold text-ink-900">Our Services</h2>
     <p class="mt-2 max-w-xl text-ink-600">From selling your car to sourcing used parts, here's how we can help.</p>
@@ -35,6 +51,19 @@ const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular
           blurb={service.data.summary}
           href={`/services/${service.id}`}
         />
+      ))}
+    </div>
+  </Container>
+
+  <Container class="py-20">
+    <h2 class="font-display text-3xl font-bold text-ink-900">How It Works</h2>
+    <div class="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-sm border border-ink-200 bg-ink-200 sm:grid-cols-3">
+      {howItWorksSteps.map((step, index) => (
+        <div class="bg-white p-6">
+          <span class="font-display text-3xl font-bold text-ink-200">{String(index + 1).padStart(2, "0")}</span>
+          <h3 class="mt-3 font-display text-lg font-bold text-ink-900">{step.title}</h3>
+          <p class="mt-2 text-sm text-ink-600">{step.body}</p>
+        </div>
       ))}
     </div>
   </Container>
@@ -68,7 +97,7 @@ const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular
       {popularMakes.map((make) => (
         <a
           href={`/makes/${make.id}`}
-          class="flex items-center justify-center rounded-xl border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+          class="flex items-center justify-center rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
         >
           {make.data.name}
         </a>
@@ -86,12 +115,7 @@ const popularMakes = (await getCollection("makes")).filter((m) => m.data.popular
       <p class="mx-auto mt-3 max-w-xl text-ink-200">
         Send us your part or vehicle details directly and we'll check what's available.
       </p>
-      <a
-        href="/contact"
-        class="mt-8 inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300"
-      >
-        Contact Us
-      </a>
+      <Button href="/contact" class="mt-8">Contact Us</Button>
     </Container>
   </div>
 </BaseLayout>

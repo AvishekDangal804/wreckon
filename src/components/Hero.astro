@@ -1,4 +1,6 @@
 ---
+import Button from "./Button.astro";
+
 interface Cta {
   label: string;
   href: string;
@@ -31,19 +33,9 @@ const { eyebrow, title, subtitle, primaryCta, secondaryCta } = Astro.props;
     </p>
 
     <div class="mt-10 flex flex-wrap items-center gap-4">
-      <a
-        href={primaryCta.href}
-        class="inline-flex items-center justify-center rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-ink-950 hover:bg-amber-300 transition-colors"
-      >
-        {primaryCta.label}
-      </a>
+      <Button href={primaryCta.href}>{primaryCta.label}</Button>
       {secondaryCta && (
-        <a
-          href={secondaryCta.href}
-          class="inline-flex items-center justify-center rounded-full border border-ink-600 px-6 py-3 text-sm font-semibold text-ink-50 hover:border-amber-400 hover:text-amber-400 transition-colors"
-        >
-          {secondaryCta.label}
-        </a>
+        <Button href={secondaryCta.href} variant="secondary">{secondaryCta.label}</Button>
       )}
     </div>
   </div>

@@ -1,25 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* "Premium industrial" palette — dark graphite base, single amber accent. */
-  --color-ink-950: #0b0d10;
-  --color-ink-900: #121519;
-  --color-ink-800: #1b1f25;
-  --color-ink-700: #272d35;
-  --color-ink-600: #3a4249;
-  --color-ink-400: #6b7480;
-  --color-ink-200: #c3c9d1;
-  --color-ink-100: #e7e9ec;
-  --color-ink-50: #f6f7f8;
+  /* "Bold editorial" palette — near-black-green base, single gold accent. */
+  --color-ink-950: #0e2a20;
+  --color-ink-900: #121614;
+  --color-ink-800: #16432f;
+  --color-ink-700: #243c33;
+  --color-ink-600: #3e4642;
+  --color-ink-400: #565e5a;
+  --color-ink-200: #c3c8c5;
+  --color-ink-100: #e3e5e4;
+  --color-ink-50: #f2f3f2;
 
-  --color-amber-600: #a35e1b;
-  --color-amber-500: #c97623;
-  --color-amber-400: #e8923a;
-  --color-amber-300: #f0ab61;
-  --color-amber-200: #f6ccA0;
+  --color-amber-600: #b3900f;
+  --color-amber-500: #e5b41e;
+  --color-amber-400: #f4c531;
+  --color-amber-300: #f7d668;
+  --color-amber-200: #fae69b;
 
-  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 
 html {
@@ -27,13 +28,27 @@ html {
 }
 
 body {
-  background-color: var(--color-ink-50);
+  background-color: #ffffff;
   color: var(--color-ink-900);
   font-family: var(--font-sans);
 }
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.field-input {
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--color-ink-600) 30%, transparent);
+  background-color: #ffffff;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
 }
 
 .content {
