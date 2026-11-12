@@ -6,11 +6,11 @@ const points: { text: string; badge?: "PENDING CLIENT CONFIRMATION" }[] = [
   { text: "Quality-checked used parts" },
   { text: "Straightforward enquiry process" },
   { text: "Vehicles bought in line with current AU regulations" },
-  { text: "Licensing & accreditation details", badge: "PENDING CLIENT CONFIRMATION" },
+  { text: "Licensing details", badge: "PENDING CLIENT CONFIRMATION" },
 ];
 ---
 <div class="border-y border-ink-600/10 bg-ink-100">
-  <Container class="grid grid-cols-1 gap-4 py-8 text-sm font-medium text-ink-700 sm:grid-cols-2 md:grid-cols-4">
+  <Container class="grid grid-cols-1 gap-3 py-5 text-sm font-medium text-ink-700 sm:grid-cols-2 md:grid-cols-4">
     {points.map((point) => (
       <div class="flex items-center gap-2">
         <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span>
