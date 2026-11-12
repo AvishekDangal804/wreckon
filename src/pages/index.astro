@@ -6,6 +6,7 @@ import TrustStrip from "../components/TrustStrip.astro";
 import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
 import Placeholder from "../components/Placeholder.astro";
+import VehicleValuationForm from "../components/VehicleValuationForm.astro";
 import type { ImageMetadata } from "astro";
 import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
 import sellYourCarPhoto from "../assets/sell-your-car.jpg";
@@ -32,7 +33,15 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
     subtitle="Tell us about the part you need or the car you want to sell, and we'll get back to you with next steps."
     primaryCta={{ label: "Contact Us", href: "/contact" }}
     secondaryCta={{ label: "Browse Parts", href: "/parts" }}
-  />
+  >
+    <Fragment slot="aside">
+      <p class="text-xs font-semibold uppercase tracking-widest text-amber-400">Australian Auto Wreckers</p>
+      <h2 class="mt-1 font-display text-xl font-bold text-ink-50">Get a Free Quote</h2>
+      <div class="mt-4">
+        <VehicleValuationForm submitLabel="Get a Quote" dark />
+      </div>
+    </Fragment>
+  </Hero>
 
   <TrustStrip />
 

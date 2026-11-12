@@ -46,6 +46,23 @@ h1, h2, h3, h4 {
   font-size: 0.875rem;
 }
 
+/* Blended variant for forms placed directly over a dark hero photo —
+   semi-transparent fields instead of a solid white card. */
+.field-input-dark {
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--color-ink-50) 25%, transparent);
+  background-color: color-mix(in srgb, var(--color-ink-950) 55%, transparent);
+  color: var(--color-ink-50);
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8125rem;
+}
+.field-input-dark::placeholder {
+  color: color-mix(in srgb, var(--color-ink-50) 55%, transparent);
+}
+.field-input-dark option {
+  color: var(--color-ink-900);
+}
+
 .content {
   color: var(--color-ink-700);
   line-height: 1.75;

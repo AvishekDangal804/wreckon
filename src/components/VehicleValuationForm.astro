@@ -4,10 +4,16 @@ import Button from "./Button.astro";
 interface Props {
   submitLabel?: string;
   defaultVehicleMake?: string;
+  dark?: boolean;
 }
-const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
+const { submitLabel = "Get a Quote", defaultVehicleMake = "", dark = false } = Astro.props;
+
+const inputClass = dark ? "field-input-dark" : "field-input";
+const labelClass = `flex flex-col gap-1 text-sm font-medium ${dark ? "text-ink-100" : "text-ink-800"}`;
+const labelClassWide = `${labelClass} md:col-span-2`;
+const hintClass = dark ? "text-xs text-ink-200" : "text-xs text-ink-500";
 ---
-<form class="enquiry-form grid grid-cols-1 gap-4 md:grid-cols-2" method="POST" action="/api/enquiry">
+<form class="enquiry-form grid grid-cols-1 gap-4 md:grid-cols-2" method="POST" action="/api/enquiry" data-dark={dark ? "true" : undefined}>
   <input type="hidden" name="type" value="vehicle_valuation" />
   <input
     type="text"
@@ -18,39 +24,39 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
     aria-hidden="true"
   />
 
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Full Name *
-    <input required name="name" type="text" class="field-input" />
+    <input required name="name" type="text" class={inputClass} />
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Contact Number *
-    <input required name="phone" type="tel" class="field-input" />
+    <input required name="phone" type="tel" class={inputClass} />
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+  <label class={labelClassWide}>
     Email Address *
-    <input required name="email" type="email" class="field-input" />
+    <input required name="email" type="email" class={inputClass} />
   </label>
 
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Vehicle Make *
-    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class="field-input" />
+    <input required name="vehicleMake" type="text" value={defaultVehicleMake} class={inputClass} />
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Vehicle Model *
-    <input required name="vehicleModel" type="text" class="field-input" />
+    <input required name="vehicleModel" type="text" class={inputClass} />
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Year *
-    <input required name="vehicleYear" type="text" class="field-input" />
+    <input required name="vehicleYear" type="text" class={inputClass} />
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Vehicle Location *
-    <input required name="location" type="text" placeholder="Suburb" class="field-input" />
+    <input required name="location" type="text" placeholder="Suburb" class={inputClass} />
   </label>
 
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Condition *
-    <select required name="condition" class="field-input">
+    <select required name="condition" class={inputClass}>
       <option value="">Select condition</option>
       <option value="Excellent">Excellent</option>
       <option value="Good">Good</option>
@@ -59,38 +65,38 @@ const { submitLabel = "Get a Quote", defaultVehicleMake = "" } = Astro.props;
       <option value="Accident">Accident</option>
     </select>
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800">
+  <label class={labelClass}>
     Is It Drivable? *
-    <select required name="drivable" class="field-input">
+    <select required name="drivable" class={inputClass}>
       <option value="">Select one</option>
       <option value="Yes">Yes</option>
       <option value="No">No</option>
     </select>
   </label>
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+  <label class={labelClassWide}>
     Transmission
-    <select name="transmission" class="field-input">
+    <select name="transmission" class={inputClass}>
       <option value="">Not sure / not applicable</option>
       <option value="Automatic">Automatic</option>
       <option value="Manual">Manual</option>
     </select>
   </label>
 
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+  <label class={labelClassWide}>
     Additional Information
-    <textarea name="additionalInfo" rows="3" class="field-input"></textarea>
+    <textarea name="additionalInfo" rows="3" class={inputClass}></textarea>
   </label>
 
-  <label class="flex flex-col gap-1 text-sm font-medium text-ink-800 md:col-span-2">
+  <label class={labelClassWide}>
     Vehicle Photos (optional)
     <input
       name="photos"
       type="file"
       accept="image/*"
       multiple
-      class="field-input"
+      class={inputClass}
     />
-    <span class="text-xs text-ink-500">Images only, up to 8MB each.</span>
+    <span class={hintClass}>Images only, up to 8MB each.</span>
   </label>
 
   <div class="md:col-span-2">
