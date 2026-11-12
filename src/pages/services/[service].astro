@@ -9,9 +9,11 @@ import EnquiryForm from "../../components/EnquiryForm.astro";
 import PartsEnquiryForm from "../../components/PartsEnquiryForm.astro";
 import VehicleValuationForm from "../../components/VehicleValuationForm.astro";
 import vehicleRemovalPhoto from "../../assets/vehicle-removal.jpg";
+import sellYourCarPhoto from "../../assets/sell-your-car.jpg";
 
 const serviceImages: Record<string, ImageMetadata> = {
   "vehicle-removal": vehicleRemovalPhoto,
+  "sell-your-car": sellYourCarPhoto,
 };
 
 export async function getStaticPaths() {

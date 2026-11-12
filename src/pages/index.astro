@@ -9,9 +9,11 @@ import Button from "../components/Button.astro";
 import Placeholder from "../components/Placeholder.astro";
 import type { ImageMetadata } from "astro";
 import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
+import sellYourCarPhoto from "../assets/sell-your-car.jpg";
 
 const serviceImages: Record<string, ImageMetadata> = {
   "vehicle-removal": vehicleRemovalPhoto,
+  "sell-your-car": sellYourCarPhoto,
 };
 
 const services = await getCollection("services");

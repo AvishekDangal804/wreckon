@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import Container from "../components/Container.astro";
 import VehicleValuationForm from "../components/VehicleValuationForm.astro";
+import sellYourCarPhoto from "../assets/sell-your-car.jpg";
 ---
 <BaseLayout
   title="Sell Your Car"
@@ -13,6 +14,8 @@ import VehicleValuationForm from "../components/VehicleValuationForm.astro";
     title="Sell your car, quickly and simply."
     subtitle="Old, damaged, unregistered or just unwanted — tell us about your vehicle and we'll get back to you with a quote."
     primaryCta={{ label: "Get a Quote Below", href: "#quote" }}
+    image={sellYourCarPhoto}
+    imageAlt="Selling a car to WRECKON"
   />
 
   <Container class="py-16">
