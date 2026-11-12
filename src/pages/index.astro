@@ -7,6 +7,12 @@ import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
 import Button from "../components/Button.astro";
 import Placeholder from "../components/Placeholder.astro";
+import type { ImageMetadata } from "astro";
+import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
+
+const serviceImages: Record<string, ImageMetadata> = {
+  "vehicle-removal": vehicleRemovalPhoto,
+};
 
 const services = await getCollection("services");
 const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
@@ -47,6 +53,8 @@ const howItWorksSteps = [
           title={service.data.name}
           blurb={service.data.summary}
           href={`/services/${service.id}`}
+          image={serviceImages[service.id]}
+          imageAlt={serviceImages[service.id] ? `WRECKON ${service.data.name}` : undefined}
         />
       ))}
     </div>
