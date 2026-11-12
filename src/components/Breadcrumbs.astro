@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from "../lib/siteConfig";
+import { safeJsonLd } from "../lib/safeJsonLd";
 
 interface Crumb {
   label: string;
@@ -22,7 +23,7 @@ const breadcrumbSchema = {
   })),
 };
 ---
-<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+<script type="application/ld+json" set:html={safeJsonLd(breadcrumbSchema)} />
 <nav aria-label="Breadcrumb" class:list={["text-sm", dark ? "text-ink-300" : "text-ink-500"]}>
   <ol class="flex flex-wrap items-center gap-1">
     {items.map((item, index) => (

@@ -18,7 +18,7 @@ const navItems = [
       {siteConfig.name}
     </a>
 
-    <nav class="hidden md:flex items-center gap-8">
+    <nav class="hidden lg:flex items-center gap-6">
       {navItems.map((item) => (
         <a href={item.href} class="text-sm font-medium text-ink-200 hover:text-amber-400 transition-colors">
           {item.label}
@@ -26,7 +26,7 @@ const navItems = [
       ))}
     </nav>
 
-    <div class="hidden md:flex items-center gap-4">
+    <div class="hidden lg:flex items-center gap-4">
       <a
         href="/sell-your-car"
         class="text-sm font-medium text-ink-200 hover:text-amber-400 transition-colors"
@@ -38,7 +38,7 @@ const navItems = [
 
     <button
       id="menu-toggle"
-      class="md:hidden inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
+      class="lg:hidden inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
       aria-label="Toggle menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
@@ -49,7 +49,7 @@ const navItems = [
     </button>
   </Container>
 
-  <nav id="mobile-menu" class="hidden md:hidden border-t border-ink-700 bg-ink-950">
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
     <Container class="flex flex-col gap-1 py-3">
       {navItems.map((item) => (
         <a href={item.href} class="rounded-sm px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">

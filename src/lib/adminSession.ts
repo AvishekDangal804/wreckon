@@ -13,9 +13,12 @@ export function isAdminConfigured(): boolean {
 
 export function checkAdminPassword(password: string): boolean {
   const expected = import.meta.env.ADMIN_PASSWORD ?? "";
-  const a = Buffer.from(password);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length) return false;
+  const secret = import.meta.env.SESSION_SECRET ?? "";
+  // Compare fixed-length HMAC digests rather than the raw strings, so a
+  // length mismatch never short-circuits the comparison and leaks the real
+  // password's length via timing.
+  const a = createHmac("sha256", secret).update(password).digest();
+  const b = createHmac("sha256", secret).update(expected).digest();
   return timingSafeEqual(a, b);
 }
 

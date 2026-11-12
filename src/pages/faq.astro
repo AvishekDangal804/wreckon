@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import PlaceholderNotice from "../components/PlaceholderNotice.astro";
+import { safeJsonLd } from "../lib/safeJsonLd";
 
 const faqs = [
   {
@@ -33,7 +34,7 @@ const faqSchema = {
 };
 ---
 <BaseLayout title="FAQ" description="Frequently asked questions about buying parts or selling your car to WRECKON.">
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={safeJsonLd(faqSchema)} />
   <Container class="py-16">
     <div class="max-w-2xl">
       <h1 class="font-display text-4xl font-bold text-ink-900">Frequently Asked Questions</h1>

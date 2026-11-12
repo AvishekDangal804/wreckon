@@ -5,6 +5,7 @@ import Footer from "../components/Footer.astro";
 import StickyCallButton from "../components/StickyCallButton.astro";
 import PlaceholderBanner from "../components/PlaceholderBanner.astro";
 import { siteConfig, BUSINESS_INFO_CONFIRMED } from "../lib/siteConfig";
+import { safeJsonLd } from "../lib/safeJsonLd";
 
 interface Props {
   title: string;
@@ -61,14 +62,14 @@ const localBusinessSchema = {
     />
 
     {BUSINESS_INFO_CONFIRMED && (
-      <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+      <script type="application/ld+json" set:html={safeJsonLd(localBusinessSchema)} />
     )}
 
     {Boolean(import.meta.env.PUBLIC_TURNSTILE_SITE_KEY) && (
       <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     )}
   </head>
-  <body class="min-h-screen bg-ink-50 pb-16 md:pb-0">
+  <body class="min-h-screen bg-ink-50 pb-16 lg:pb-0">
     <PlaceholderBanner />
     <Header />
     <main>
