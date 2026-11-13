@@ -40,7 +40,7 @@ const { Content } = await render(category);
 const bannerImage = categoryImages[category.id];
 ---
 <BaseLayout title={category.data.name} description={category.data.blurb}>
-  <div class="relative overflow-hidden bg-ink-950 py-16 text-ink-50">
+  <div class="relative overflow-hidden bg-ink-950 py-20 text-ink-50">
     {bannerImage && (
       <>
         <Image
@@ -50,7 +50,7 @@ const bannerImage = categoryImages[category.id];
           widths={[640, 1024, 1600]}
           sizes="100vw"
         />
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/85 to-ink-950/40"></div>
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950/90 via-ink-950/55 to-transparent"></div>
       </>
     )}
     <Container class="relative">
