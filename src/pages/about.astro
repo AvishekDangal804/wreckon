@@ -1,20 +1,31 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/Container.astro";
 import Button from "../components/Button.astro";
 import PlaceholderNotice from "../components/PlaceholderNotice.astro";
+import aboutPhoto from "../assets/about.jpg";
 ---
 <BaseLayout
   title="About Us"
   description="About WRECKON — Australian auto wreckers and used parts suppliers."
 >
   <Container class="py-16">
-    <div class="max-w-2xl">
-      <h1 class="font-display text-4xl font-bold text-ink-900">About WRECKON</h1>
+    <h1 class="font-display text-4xl font-bold text-ink-900">About WRECKON</h1>
 
+    <div class="mt-6 overflow-hidden rounded-sm">
+      <Image
+        src={aboutPhoto}
+        alt="Inside the WRECKON parts warehouse"
+        class="h-64 w-full object-cover md:h-80"
+        widths={[640, 1024, 1600]}
+        sizes="100vw"
+      />
+    </div>
+
+    <div class="mt-8 max-w-2xl">
       <PlaceholderNotice label="CLIENT CONTENT REQUIRED">
-        Real company history, team details and photography will go here once the business supplies them.
-        Nothing below is invented.
+        Real company history and team details will go here once the business supplies them. Nothing below is invented.
       </PlaceholderNotice>
 
       <div class="content mt-6">
