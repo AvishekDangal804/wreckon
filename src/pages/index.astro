@@ -99,30 +99,34 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
     </Container>
   </div>
 
-  <Container class="py-20">
-    <h2 class="font-display text-3xl font-bold text-ink-900">How It Works</h2>
-    <p class="mt-2 max-w-xl text-ink-600">
-      Whether you're selling a vehicle or looking for a specific part, the process starts the same way.
-    </p>
+  <div class="bg-ink-950 py-20 text-ink-50">
+    <Container>
+      <p class="text-sm font-bold uppercase tracking-widest text-amber-400">Process</p>
+      <h2 class="mt-3 font-display text-3xl font-bold uppercase tracking-tight md:text-4xl">How It Works</h2>
+      <p class="mt-3 max-w-xl text-ink-300">
+        Whether you're selling a vehicle or looking for a specific part, the process starts the same way.
+      </p>
 
-    <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
-      <div>
-        <p class="font-display text-3xl font-bold text-amber-500">1</p>
-        <h3 class="mt-2 font-semibold text-ink-900">Tell us the details</h3>
-        <p class="mt-2 text-sm text-ink-600">Submit the form with your vehicle or the part you need.</p>
+      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+        {[
+          { number: "1", title: "Tell us the details", description: "Submit the form with your vehicle or the part you need." },
+          { number: "2", title: "We get back to you", description: "By phone or email, with a quote or availability." },
+          { number: "3", title: "We sort the rest", description: "Pick-up and payment, or part delivery — whichever applies." },
+        ].map((step) => (
+          <div class="border border-ink-700 bg-ink-900 p-6">
+            <div class="flex items-center gap-3">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center bg-amber-400 font-display text-lg font-bold text-ink-950">
+                {step.number}
+              </span>
+              <span class="h-px flex-1 bg-ink-700"></span>
+            </div>
+            <h3 class="mt-5 font-display text-base font-bold uppercase tracking-wide">{step.title}</h3>
+            <p class="mt-2 text-sm text-ink-300">{step.description}</p>
+          </div>
+        ))}
       </div>
-      <div>
-        <p class="font-display text-3xl font-bold text-amber-500">2</p>
-        <h3 class="mt-2 font-semibold text-ink-900">We get back to you</h3>
-        <p class="mt-2 text-sm text-ink-600">By phone or email, with a quote or availability.</p>
-      </div>
-      <div>
-        <p class="font-display text-3xl font-bold text-amber-500">3</p>
-        <h3 class="mt-2 font-semibold text-ink-900">We sort the rest</h3>
-        <p class="mt-2 text-sm text-ink-600">Pick-up and payment, or part delivery — whichever applies.</p>
-      </div>
-    </div>
 
-    <Button href="/how-it-works" variant="secondary" class="mt-10">See full details</Button>
-  </Container>
+      <Button href="/how-it-works" variant="secondary" class="mt-10">See full details</Button>
+    </Container>
+  </div>
 </BaseLayout>
