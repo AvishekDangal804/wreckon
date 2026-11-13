@@ -5,7 +5,6 @@ import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
 import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
-import Placeholder from "../components/Placeholder.astro";
 import type { ImageMetadata } from "astro";
 import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
 import sellYourCarPhoto from "../assets/sell-your-car.jpg";
@@ -77,10 +76,7 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
 
   <div class="bg-ink-100 py-20">
     <Container>
-      <h2 class="flex flex-wrap items-center gap-3 font-display text-3xl font-bold text-ink-900">
-        Used Parts by Category
-        <Placeholder label="SAMPLE CONTENT" />
-      </h2>
+      <h2 class="font-display text-3xl font-bold text-ink-900">Used Parts by Category</h2>
       <p class="mt-2 max-w-xl text-ink-600">A sample of the part categories we stock. Tell us what you need and we'll check availability.</p>
 
       <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -89,7 +85,6 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
             title={category.data.name}
             blurb={category.data.blurb}
             href={`/parts/${category.id}`}
-            badge="SAMPLE CONTENT"
             image={categoryImages[category.id]}
             imageAlt={categoryImages[category.id] ? `WRECKON used ${category.data.name}` : undefined}
           />

@@ -4,7 +4,6 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import PartsEnquiryForm from "../../components/PartsEnquiryForm.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
-import Placeholder from "../../components/Placeholder.astro";
 
 export async function getStaticPaths() {
   const makes = await getCollection("makes");
@@ -22,10 +21,7 @@ const { Content } = await render(make);
     <Container>
       <Breadcrumbs dark items={[{ label: "Home", href: "/" }, { label: "Makes", href: "/makes" }, { label: make.data.name }]} />
       <p class="mt-4 text-sm font-semibold uppercase tracking-widest text-amber-400">Make</p>
-      <h1 class="mt-3 flex flex-wrap items-center gap-3 font-display text-4xl font-bold">
-        {make.data.name} Parts
-        <Placeholder label="SAMPLE CONTENT" />
-      </h1>
+      <h1 class="mt-3 font-display text-4xl font-bold">{make.data.name} Parts</h1>
       <p class="mt-3 max-w-xl text-ink-200">{make.data.blurb}</p>
     </Container>
   </div>
