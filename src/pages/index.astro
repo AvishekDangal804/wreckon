@@ -11,12 +11,27 @@ import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
 import sellYourCarPhoto from "../assets/sell-your-car.jpg";
 import usedPartsPhoto from "../assets/used-parts.jpg";
 import wreckingPhoto from "../assets/wrecking.jpg";
+import bodyPanelsPhoto from "../assets/parts/body-panels.jpg";
+import coolingPhoto from "../assets/parts/cooling.jpg";
+import electricalPhoto from "../assets/parts/electrical.jpg";
+import enginesPhoto from "../assets/parts/engines.jpg";
+import lightsPhoto from "../assets/parts/lights.jpg";
+import suspensionSteeringPhoto from "../assets/parts/suspension-steering.jpg";
 
 const serviceImages: Record<string, ImageMetadata> = {
   "vehicle-removal": vehicleRemovalPhoto,
   "sell-your-car": sellYourCarPhoto,
   "used-parts": usedPartsPhoto,
   "wrecking": wreckingPhoto,
+};
+
+const categoryImages: Record<string, ImageMetadata> = {
+  "body-panels": bodyPanelsPhoto,
+  "cooling": coolingPhoto,
+  "electrical": electricalPhoto,
+  "engines": enginesPhoto,
+  "lights": lightsPhoto,
+  "suspension-steering": suspensionSteeringPhoto,
 };
 
 const services = await getCollection("services");
@@ -71,6 +86,8 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
             blurb={category.data.blurb}
             href={`/parts/${category.id}`}
             badge="SAMPLE CONTENT"
+            image={categoryImages[category.id]}
+            imageAlt={categoryImages[category.id] ? `WRECKON used ${category.data.name}` : undefined}
           />
         ))}
       </div>
