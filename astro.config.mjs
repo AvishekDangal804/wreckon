@@ -15,5 +15,9 @@ export default defineConfig({
   },
 
   integrations: [sitemap()],
-  adapter: vercel()
+  adapter: vercel(),
+
+  redirects: {
+    '/about': '/contact'
+  }
 });
