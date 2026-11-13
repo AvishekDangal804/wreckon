@@ -10,6 +10,11 @@ const navItems = [
   { label: "Makes", href: "/makes" },
   { label: "Contact", href: "/contact" },
 ];
+
+const currentPath = Astro.url.pathname;
+function isActive(href: string) {
+  return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+}
 ---
 <header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
   <Container class="flex items-center justify-between py-4">
@@ -17,7 +22,10 @@ const navItems = [
 
     <nav class="hidden lg:flex items-center gap-6">
       {navItems.map((item) => (
-        <a href={item.href} class="text-sm font-medium text-ink-200 hover:text-amber-400 transition-colors">
+        <a
+          href={item.href}
+          class={`border-b-2 pb-1 text-sm font-medium transition-colors ${isActive(item.href) ? "border-white text-white" : "border-transparent text-ink-200 hover:text-amber-400"}`}
+        >
           {item.label}
         </a>
       ))}
@@ -44,7 +52,10 @@ const navItems = [
   <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
     <Container class="flex flex-col gap-1 py-3">
       {navItems.map((item) => (
-        <a href={item.href} class="rounded-sm px-3 py-2 text-sm font-medium text-ink-200 hover:bg-ink-800 hover:text-amber-400">
+        <a
+          href={item.href}
+          class={`rounded-sm px-3 py-2 text-sm font-medium ${isActive(item.href) ? "bg-ink-800 text-white" : "text-ink-200 hover:bg-ink-800 hover:text-amber-400"}`}
+        >
           {item.label}
         </a>
       ))}
