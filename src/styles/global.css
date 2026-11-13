@@ -58,3 +58,22 @@ h1, h2, h3, h4 {
   padding-left: 1.25rem;
   list-style: disc;
 }
+.content h2 {
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+  color: var(--color-ink-900);
+}
+.content h2:first-child {
+  margin-top: 0;
+}
+.content h3 {
+  margin-top: 1.75rem;
+  font-size: 1.125rem;
+  color: var(--color-ink-900);
+}
+.content li {
+  margin-top: 0.375rem;
+}
+.content li strong {
+  color: var(--color-ink-900);
+}
