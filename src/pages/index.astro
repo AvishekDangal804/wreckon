@@ -106,14 +106,15 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
     </p>
 
     <div class="mt-5 h-1 w-full overflow-hidden rounded-full bg-ink-100">
-      <div id="hiw-progress" class="h-full w-0 bg-amber-400"></div>
+      <div id="hiw-progress" class="h-full w-0 bg-amber-400 transition-[width] duration-500 ease-out"></div>
     </div>
 
-    <div id="hiw-steps" class="mt-5 grid grid-cols-1 gap-3 md:grid-cols-3">
+    <div id="hiw-steps" class="mt-5 grid grid-cols-1 gap-3 md:grid-cols-4">
       {[
         { number: "1", title: "Tell us the details", description: "Submit the form with your vehicle or the part you need." },
-        { number: "2", title: "We get back to you", description: "By phone or email, with a quote or availability." },
-        { number: "3", title: "We sort the rest", description: "Pick-up and payment, or part delivery — whichever applies." },
+        { number: "2", title: "We check it", description: "Availability or condition is checked against what you've told us." },
+        { number: "3", title: "We get back to you", description: "By phone or email, with a quote or next steps." },
+        { number: "4", title: "We sort the rest", description: "Pick-up and payment, or part delivery — whichever applies." },
       ].map((step, i) => (
         <button
           type="button"
@@ -143,45 +144,48 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
   const progress = document.getElementById("hiw-progress");
   const DURATION = 4000;
   let active = 0;
-  let paused = false;
-  let start = performance.now();
+  let timer: number | undefined;
+
+  function render() {
+    steps.forEach((el, idx) => el.setAttribute("data-active", String(idx === active)));
+    if (progress) {
+      progress.style.width = `${((active + 1) / steps.length) * 100}%`;
+    }
+  }
 
   function setActive(index: number) {
     active = index;
-    steps.forEach((el, idx) => el.setAttribute("data-active", String(idx === index)));
-    start = performance.now();
+    render();
+  }
+
+  function stopAutoplay() {
+    if (timer !== undefined) {
+      window.clearInterval(timer);
+      timer = undefined;
+    }
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    timer = window.setInterval(() => {
+      setActive((active + 1) % steps.length);
+    }, DURATION);
   }
 
   steps.forEach((el, idx) => {
     el.addEventListener("mouseenter", () => {
-      paused = true;
+      stopAutoplay();
       setActive(idx);
     });
     el.addEventListener("focus", () => {
-      paused = true;
+      stopAutoplay();
       setActive(idx);
     });
-    el.addEventListener("mouseleave", () => {
-      paused = false;
-      start = performance.now();
-    });
-    el.addEventListener("blur", () => {
-      paused = false;
-      start = performance.now();
-    });
+    el.addEventListener("mouseleave", startAutoplay);
+    el.addEventListener("blur", startAutoplay);
   });
 
-  function tick(now: number) {
-    if (!paused && progress && steps.length > 0) {
-      const elapsed = now - start;
-      const pct = Math.min(100, (elapsed / DURATION) * 100);
-      progress.style.width = `${pct}%`;
-      if (elapsed >= DURATION) {
-        setActive((active + 1) % steps.length);
-      }
-    }
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
+  render();
+  startAutoplay();
   </script>
 </BaseLayout>
