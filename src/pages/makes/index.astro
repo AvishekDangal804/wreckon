@@ -29,16 +29,16 @@ const otherMakes = allMakes.filter((make) => !make.data.popular);
     </p>
 
     <h2 class="mt-12 font-display text-xl font-bold text-ink-900">Most Requested Makes</h2>
-    <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+    <div class="mt-5 grid grid-cols-2 border border-ink-200 bg-ink-200 sm:grid-cols-3 md:grid-cols-4">
       {popularMakes.map((make) => (
         <a
           href={`/makes/${make.id}`}
-          class="flex flex-col items-center justify-center gap-3 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+          class="group relative flex flex-col items-center justify-center gap-2 border border-ink-200 bg-white px-4 py-5 text-center transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-amber-400 hover:shadow-lg"
         >
           {makeLogos[make.id] && (
-            <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-10 w-auto object-contain" widths={[80]} sizes="80px" />
+            <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-110" widths={[120]} sizes="120px" />
           )}
-          {make.data.name}
+          <span class="font-display text-sm font-bold text-ink-800 transition-colors duration-300 group-hover:text-amber-600">{make.data.name}</span>
         </a>
       ))}
     </div>
@@ -48,16 +48,16 @@ const otherMakes = allMakes.filter((make) => !make.data.popular);
       Don't see your vehicle's make here? Send us the details anyway — we take in a broad range of vehicles
       and can check availability even outside this list.
     </p>
-    <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+    <div class="mt-5 grid grid-cols-2 border border-ink-200 bg-ink-200 sm:grid-cols-3 md:grid-cols-4">
       {otherMakes.map((make) => (
         <a
           href={`/makes/${make.id}`}
-          class="flex flex-col items-center justify-center gap-3 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+          class="group relative flex flex-col items-center justify-center gap-2 border border-ink-200 bg-white px-4 py-5 text-center transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-amber-400 hover:shadow-lg"
         >
           {makeLogos[make.id] && (
-            <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-10 w-auto object-contain" widths={[80]} sizes="80px" />
+            <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-110" widths={[120]} sizes="120px" />
           )}
-          {make.data.name}
+          <span class="font-display text-sm font-bold text-ink-800 transition-colors duration-300 group-hover:text-amber-600">{make.data.name}</span>
         </a>
       ))}
     </div>

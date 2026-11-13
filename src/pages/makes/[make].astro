@@ -46,22 +46,42 @@ const logo = makeLogos[make.id];
   </div>
 
   <Container class="grid grid-cols-1 gap-12 py-16 md:grid-cols-3">
-    <div class="content md:col-span-2">
-      <Content />
+    <div class="md:col-span-2">
+      <div class="content">
+        <Content />
+      </div>
 
-      <h2 class="mt-10 font-display text-xl font-bold text-ink-900">Common {make.data.name} Parts We Stock</h2>
-      <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-ink-700 sm:grid-cols-3">
-        {partsCategories.map((category) => (
-          <li><a href="/parts#request" class="hover:text-amber-600">{category.data.name}</a></li>
-        ))}
-      </ul>
+      <div class="mt-8 rounded-sm border border-ink-200 bg-ink-50 p-6">
+        <h2 class="font-display text-lg font-bold text-ink-900">Common {make.data.name} Parts We Stock</h2>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {partsCategories.map((category) => (
+            <a
+              href="/parts#request"
+              class="rounded-full border border-ink-600/20 bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors hover:border-amber-400 hover:bg-amber-50 hover:text-amber-600"
+            >
+              {category.data.name}
+            </a>
+          ))}
+        </div>
+      </div>
 
-      <h2 class="mt-10 font-display text-xl font-bold text-ink-900">What to Tell Us</h2>
-      <ul class="mt-4 space-y-2 text-sm text-ink-700">
-        <li>Model, year and engine/variant, if you know it</li>
-        <li>Which part you need, as specific as possible</li>
-        <li>A photo of the damaged or failed part, if relevant</li>
-      </ul>
+      <div class="mt-6 rounded-sm border border-ink-200 bg-ink-50 p-6">
+        <h2 class="font-display text-lg font-bold text-ink-900">What to Tell Us</h2>
+        <ul class="mt-4 space-y-2 text-sm text-ink-700">
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500"></span>
+            Model, year and engine/variant, if you know it
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500"></span>
+            Which part you need, as specific as possible
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500"></span>
+            A photo of the damaged or failed part, if relevant
+          </li>
+        </ul>
+      </div>
 
       <p class="mt-6 rounded-sm bg-ink-100 p-4 text-sm text-ink-600">
         We don't have live stock listings on the site yet — send us your model, year and the part you need and we'll check availability.
