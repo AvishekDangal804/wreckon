@@ -6,6 +6,7 @@ import TrustStrip from "../components/TrustStrip.astro";
 import Container from "../components/Container.astro";
 import Card from "../components/Card.astro";
 import Placeholder from "../components/Placeholder.astro";
+import Button from "../components/Button.astro";
 import type { ImageMetadata } from "astro";
 import vehicleRemovalPhoto from "../assets/vehicle-removal.jpg";
 import sellYourCarPhoto from "../assets/sell-your-car.jpg";
@@ -97,4 +98,31 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
       </a>
     </Container>
   </div>
+
+  <Container class="py-20">
+    <h2 class="font-display text-3xl font-bold text-ink-900">How It Works</h2>
+    <p class="mt-2 max-w-xl text-ink-600">
+      Whether you're selling a vehicle or looking for a specific part, the process starts the same way.
+    </p>
+
+    <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div>
+        <p class="font-display text-3xl font-bold text-amber-500">1</p>
+        <h3 class="mt-2 font-semibold text-ink-900">Tell us the details</h3>
+        <p class="mt-2 text-sm text-ink-600">Submit the form with your vehicle or the part you need.</p>
+      </div>
+      <div>
+        <p class="font-display text-3xl font-bold text-amber-500">2</p>
+        <h3 class="mt-2 font-semibold text-ink-900">We get back to you</h3>
+        <p class="mt-2 text-sm text-ink-600">By phone or email, with a quote or availability.</p>
+      </div>
+      <div>
+        <p class="font-display text-3xl font-bold text-amber-500">3</p>
+        <h3 class="mt-2 font-semibold text-ink-900">We sort the rest</h3>
+        <p class="mt-2 text-sm text-ink-600">Pick-up and payment, or part delivery — whichever applies.</p>
+      </div>
+    </div>
+
+    <Button href="/how-it-works" variant="secondary" class="mt-10">See full details</Button>
+  </Container>
 </BaseLayout>
