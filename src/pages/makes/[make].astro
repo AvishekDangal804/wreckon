@@ -6,6 +6,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import PartsEnquiryForm from "../../components/PartsEnquiryForm.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
+import makesBanner from "../../assets/makes-banner.jpg";
 
 const logos = import.meta.glob<{ default: ImageMetadata }>("../../assets/makes/*.png", { eager: true });
 const makeLogos: Record<string, ImageMetadata> = {};
@@ -29,8 +30,16 @@ const { Content } = await render(make);
 const logo = makeLogos[make.id];
 ---
 <BaseLayout title={`${make.data.name} Parts`} description={make.data.blurb}>
-  <div class="bg-ink-950 py-16 text-ink-50">
-    <Container>
+  <div class="relative overflow-hidden bg-ink-950 py-16 text-ink-50">
+    <Image
+      src={makesBanner}
+      alt=""
+      class="absolute inset-0 hidden h-full w-full object-cover md:block"
+      widths={[640, 1024, 1600]}
+      sizes="100vw"
+    />
+    <div class="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink-950/90 via-ink-950/55 to-transparent md:block"></div>
+    <Container class="relative">
       <Breadcrumbs dark items={[{ label: "Home", href: "/" }, { label: "Makes", href: "/makes" }, { label: make.data.name }]} />
       <div class="mt-4 flex items-center gap-4">
         {logo && (
