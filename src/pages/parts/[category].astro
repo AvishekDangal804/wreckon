@@ -40,30 +40,27 @@ const { Content } = await render(category);
 const bannerImage = categoryImages[category.id];
 ---
 <BaseLayout title={category.data.name} description={category.data.blurb}>
-  <div class="bg-ink-950 py-16 text-ink-50">
-    <Container>
-      <div class={`grid grid-cols-1 items-center gap-10 ${bannerImage ? "lg:grid-cols-2" : ""}`}>
-        <div>
-          <Breadcrumbs dark items={[{ label: "Home", href: "/" }, { label: "Parts", href: "/parts" }, { label: category.data.name }]} />
-          <p class="mt-4 text-sm font-semibold uppercase tracking-widest text-amber-400">Used Parts</p>
-          <h1 class="mt-3 flex flex-wrap items-center gap-3 font-display text-4xl font-bold">
-            {category.data.name}
-            <Placeholder label="SAMPLE CONTENT" />
-          </h1>
-          <p class="mt-3 max-w-xl text-ink-200">{category.data.blurb}</p>
-        </div>
-        {bannerImage && (
-          <div class="overflow-hidden rounded-sm">
-            <Image
-              src={bannerImage}
-              alt={`WRECKON used ${category.data.name}`}
-              class="h-64 w-full object-cover md:h-80"
-              widths={[400, 800]}
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
-          </div>
-        )}
-      </div>
+  <div class="relative overflow-hidden bg-ink-950 py-20 text-ink-50">
+    {bannerImage && (
+      <>
+        <Image
+          src={bannerImage}
+          alt={`WRECKON used ${category.data.name}`}
+          class="absolute inset-0 h-full w-full object-cover"
+          widths={[640, 1024, 1600]}
+          sizes="100vw"
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950/90 via-ink-950/55 to-transparent"></div>
+      </>
+    )}
+    <Container class="relative">
+      <Breadcrumbs dark items={[{ label: "Home", href: "/" }, { label: "Parts", href: "/parts" }, { label: category.data.name }]} />
+      <p class="mt-4 text-sm font-semibold uppercase tracking-widest text-amber-400">Used Parts</p>
+      <h1 class="mt-3 flex flex-wrap items-center gap-3 font-display text-4xl font-bold">
+        {category.data.name}
+        <Placeholder label="SAMPLE CONTENT" />
+      </h1>
+      <p class="mt-3 max-w-xl text-ink-200">{category.data.blurb}</p>
     </Container>
   </div>
 
