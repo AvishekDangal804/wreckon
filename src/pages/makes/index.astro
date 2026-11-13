@@ -12,7 +12,9 @@ for (const path in logos) {
   makeLogos[id] = logos[path].default;
 }
 
-const makes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const allMakes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCompare(b.data.name));
+const popularMakes = allMakes.filter((make) => make.data.popular);
+const otherMakes = allMakes.filter((make) => !make.data.popular);
 ---
 <BaseLayout
   title="Browse by Make"
@@ -20,10 +22,34 @@ const makes = (await getCollection("makes")).sort((a, b) => a.data.name.localeCo
 >
   <Container class="py-16">
     <h1 class="font-display text-4xl font-bold text-ink-900">Browse by Make</h1>
-    <p class="mt-3 max-w-xl text-ink-600">Select a make below to see what we typically stock.</p>
+    <p class="mt-3 max-w-2xl text-ink-600">
+      We dismantle and stock parts across a wide range of vehicle makes — from everyday passenger cars to
+      utes and 4WDs. Select a make below to see what we typically carry, or send us your vehicle details
+      directly if you already know what you need.
+    </p>
 
-    <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-      {makes.map((make) => (
+    <h2 class="mt-12 font-display text-xl font-bold text-ink-900">Most Requested Makes</h2>
+    <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      {popularMakes.map((make) => (
+        <a
+          href={`/makes/${make.id}`}
+          class="flex flex-col items-center justify-center gap-3 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"
+        >
+          {makeLogos[make.id] && (
+            <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-10 w-auto object-contain" widths={[80]} sizes="80px" />
+          )}
+          {make.data.name}
+        </a>
+      ))}
+    </div>
+
+    <h2 class="mt-12 font-display text-xl font-bold text-ink-900">All Makes</h2>
+    <p class="mt-2 max-w-2xl text-sm text-ink-600">
+      Don't see your vehicle's make here? Send us the details anyway — we take in a broad range of vehicles
+      and can check availability even outside this list.
+    </p>
+    <div class="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+      {otherMakes.map((make) => (
         <a
           href={`/makes/${make.id}`}
           class="flex flex-col items-center justify-center gap-3 rounded-sm border border-ink-600/15 bg-white px-4 py-6 text-center font-display font-semibold text-ink-800 hover:border-amber-400 hover:text-amber-500"

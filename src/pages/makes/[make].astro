@@ -14,6 +14,8 @@ for (const path in logos) {
   makeLogos[id] = logos[path].default;
 }
 
+const partsCategories = (await getCollection("partsCategories")).sort((a, b) => a.data.name.localeCompare(b.data.name));
+
 export async function getStaticPaths() {
   const makes = await getCollection("makes");
   return makes.map((make) => ({
@@ -46,6 +48,21 @@ const logo = makeLogos[make.id];
   <Container class="grid grid-cols-1 gap-12 py-16 md:grid-cols-3">
     <div class="content md:col-span-2">
       <Content />
+
+      <h2 class="mt-10 font-display text-xl font-bold text-ink-900">Common {make.data.name} Parts We Stock</h2>
+      <ul class="mt-4 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-ink-700 sm:grid-cols-3">
+        {partsCategories.map((category) => (
+          <li><a href="/parts#request" class="hover:text-amber-600">{category.data.name}</a></li>
+        ))}
+      </ul>
+
+      <h2 class="mt-10 font-display text-xl font-bold text-ink-900">What to Tell Us</h2>
+      <ul class="mt-4 space-y-2 text-sm text-ink-700">
+        <li>Model, year and engine/variant, if you know it</li>
+        <li>Which part you need, as specific as possible</li>
+        <li>A photo of the damaged or failed part, if relevant</li>
+      </ul>
+
       <p class="mt-6 rounded-sm bg-ink-100 p-4 text-sm text-ink-600">
         We don't have live stock listings on the site yet — send us your model, year and the part you need and we'll check availability.
       </p>
