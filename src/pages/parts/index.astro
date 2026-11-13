@@ -4,6 +4,7 @@ import type { ImageMetadata } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/Container.astro";
 import Card from "../../components/Card.astro";
+import PartsEnquiryForm from "../../components/PartsEnquiryForm.astro";
 import bodyPanelsPhoto from "../../assets/parts/body-panels.jpg";
 import coolingPhoto from "../../assets/parts/cooling.jpg";
 import electricalPhoto from "../../assets/parts/electrical.jpg";
@@ -33,7 +34,7 @@ const partsCategories = await getCollection("partsCategories");
   <Container class="py-16">
     <h1 class="font-display text-4xl font-bold text-ink-900">Used Parts</h1>
     <p class="mt-3 max-w-xl text-ink-600">
-      Browse by category below, or <a href="/parts/request" class="font-semibold text-amber-600 hover:text-amber-500">request a part</a> directly if you know what you're after.
+      Browse the categories we typically stock below, then use the form to request a part — we'll check availability and get back to you.
     </p>
 
     <div class="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -41,11 +42,24 @@ const partsCategories = await getCollection("partsCategories");
         <Card
           title={category.data.name}
           blurb={category.data.blurb}
-          href={`/parts/${category.id}`}
+          href="#request"
           image={categoryImages[category.id]}
           imageAlt={categoryImages[category.id] ? `WRECKON used ${category.data.name}` : undefined}
         />
       ))}
     </div>
   </Container>
+
+  <div id="request" class="bg-ink-100 py-16">
+    <Container>
+      <div class="mx-auto max-w-2xl">
+        <h2 class="font-display text-2xl font-bold text-ink-900">Request a Part</h2>
+        <p class="mt-2 text-sm text-ink-600">Tell us your vehicle and the part you need, and we'll check what's available.</p>
+
+        <div class="mt-8 rounded-sm border border-ink-600/15 bg-white p-6">
+          <PartsEnquiryForm submitLabel="Request This Part" />
+        </div>
+      </div>
+    </Container>
+  </div>
 </BaseLayout>

@@ -84,7 +84,7 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
           <Card
             title={category.data.name}
             blurb={category.data.blurb}
-            href={`/parts/${category.id}`}
+            href="/parts#request"
             image={categoryImages[category.id]}
             imageAlt={categoryImages[category.id] ? `WRECKON used ${category.data.name}` : undefined}
           />
