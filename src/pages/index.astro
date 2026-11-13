@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import TrustStrip from "../components/TrustStrip.astro";
@@ -39,6 +40,14 @@ const categoryImages: Record<string, ImageMetadata> = {
 
 const services = await getCollection("services");
 const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
+
+const makeLogoFiles = import.meta.glob<{ default: ImageMetadata }>("../assets/makes/*.png", { eager: true });
+const makeLogos: Record<string, ImageMetadata> = {};
+for (const path in makeLogoFiles) {
+  const id = path.split("/").pop()!.replace(".png", "");
+  makeLogos[id] = makeLogoFiles[path].default;
+}
+const popularMakes = (await getCollection("makes")).filter((make) => make.data.popular);
 ---
 <BaseLayout
   title="Home"
@@ -137,6 +146,31 @@ const partsCategories = (await getCollection("partsCategories")).slice(0, 6);
       See full details &rarr;
     </a>
   </Container>
+
+  <div class="bg-ink-100 py-16">
+    <Container>
+      <h2 class="font-display text-2xl font-bold text-ink-900 md:text-3xl">Makes We Stock Parts For</h2>
+      <p class="mt-2 max-w-xl text-ink-600">A selection of the vehicle makes we regularly dismantle and supply used parts for.</p>
+
+      <div class="mt-8 grid grid-cols-2 border border-ink-200 bg-ink-200 sm:grid-cols-4">
+        {popularMakes.map((make) => (
+          <a
+            href={`/makes/${make.id}`}
+            class="group relative flex flex-col items-center justify-center gap-4 border border-ink-200 bg-white p-8 text-center transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-amber-400 hover:shadow-lg"
+          >
+            {makeLogos[make.id] && (
+              <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-110" widths={[160]} sizes="160px" />
+            )}
+            <span class="font-display text-sm font-bold uppercase tracking-wide text-ink-900 transition-colors duration-300 group-hover:text-amber-600">{make.data.name}</span>
+          </a>
+        ))}
+      </div>
+
+      <a href="/makes" class="mt-6 inline-block text-sm font-semibold text-amber-600 hover:text-amber-500">
+        View all makes &rarr;
+      </a>
+    </Container>
+  </div>
 
   <script>
   const steps = Array.from(document.querySelectorAll<HTMLButtonElement>("#hiw-steps [data-step]"));
