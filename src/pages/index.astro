@@ -152,11 +152,11 @@ const allMakes = (await getCollection("makes")).sort((a, b) => a.data.name.local
       <h2 class="font-display text-2xl font-bold text-ink-900 md:text-3xl">Makes We Stock Parts For</h2>
       <p class="mt-2 max-w-xl text-ink-600">The vehicle makes we regularly dismantle and supply used parts for.</p>
 
-      <div class="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-5">
+      <div class="mt-8 grid grid-cols-2 border border-ink-200 bg-ink-200 sm:grid-cols-4 lg:grid-cols-5">
         {allMakes.map((make) => (
           <a
             href={`/makes/${make.id}`}
-            class="group relative flex flex-col items-center justify-center gap-1.5 px-3 py-3 text-center transition-all duration-300 hover:-translate-y-1"
+            class="group relative flex flex-col items-center justify-center gap-1.5 border border-ink-200 bg-white px-3 py-3 text-center transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:border-amber-400 hover:shadow-lg"
           >
             {makeLogos[make.id] && (
               <Image src={makeLogos[make.id]} alt={`${make.data.name} logo`} class="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-110" widths={[140]} sizes="140px" />
