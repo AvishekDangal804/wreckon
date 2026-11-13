@@ -46,11 +46,11 @@ const bannerImage = categoryImages[category.id];
         <Image
           src={bannerImage}
           alt={`WRECKON used ${category.data.name}`}
-          class="absolute inset-0 h-full w-full object-cover"
+          class="absolute inset-0 hidden h-full w-full object-cover md:block"
           widths={[640, 1024, 1600]}
           sizes="100vw"
         />
-        <div class="pointer-events-none absolute inset-0 bg-gradient-to-r from-ink-950/90 via-ink-950/55 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-ink-950/90 via-ink-950/55 to-transparent md:block"></div>
       </>
     )}
     <Container class="relative">
