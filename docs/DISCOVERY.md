@@ -181,14 +181,19 @@ Blocking or near-blocking items before build starts:
 
 No API endpoints, credentials, or integration behaviour are invented here. This describes architecture only, pending official Hazarlink documentation and access.
 
+**What Hazarlink actually is** (confirmed by reading hazarlink.com.au — their real homepage, no sub-pages beyond `/login` exist): a general-purpose B2B trade-platform SaaS, not something wrecker-specific. Twelve modules on one dataset — trade portal, quoting/invoicing, stock control, warehouse/purchasing, deliveries & driver app, receivables/payments, POS, workforce/payroll, accounting/banking, reporting, multi-branch, tickets/claims. Hosted in Sydney. Industries listed include "Auto parts & accessories" (described generically as "parts distributors and accessory suppliers," not wreckers specifically) alongside building/hardware, electrical/plumbing, food distribution, tyres/wheels, industrial/safety. Pricing: Starter $149/mo, Business $299/mo, Multi-store $599/mo, Enterprise "let's talk" (AUD+GST, month-to-month).
+
+**Critical finding: Hazarlink's own marketing site documents no public API, webhooks, developer docs, or integrations page.** Their listed "Works with" integrations are Xero, Stripe, Google Maps, bank statement/ABA files, and infra (Cloudflare/S3) — not a general third-party API. Every CTA on their site leads to "Book a demo" (a contact form asking industry/branch-count/plan interest), not to integration documentation. This isn't a case of docs existing but not yet shared with us — as far as their public site shows, **no self-serve integration method exists to find**.
+
 - Integration lives behind a single isolated adapter layer: `src/lib/integrations/hazarlink/`, with a defined TypeScript interface describing what the site would need (`fetchStockLevels()`, `submitLead()`) — **this interface and a stub client now exist** (throwing `HazarlinkNotConfiguredError` rather than faking data), but nothing calls it yet and no real endpoint/credential exists.
-- Likely integration points once docs exist:
+- **Next real step, if this integration still matters:** the business needs to contact Hazarlink directly (via their "Book a demo" form, or as an existing customer via their support line) and specifically ask whether an API, webhook, CSV export/import, or Zapier-style connector exists beyond what's publicly listed — this is a sales/support conversation, not something discoverable from outside.
+- Likely integration points if Hazarlink does expose something once asked:
   - **Inbound:** push website lead-form submissions (enquiry, request-a-part, sell-your-car) into Hazarlink's CRM/accounting, via webhook or API call.
   - **Outbound:** pull live stock/parts availability from Hazarlink's stock management system to eventually replace the static "request a part" flow with real inventory.
   - **Possible:** customer/account sync for repeat trade customers.
-- Whether this is webhook-push or scheduled-poll depends entirely on what Hazarlink exposes — undetermined until their documentation is in hand.
+- Whether this is webhook-push, scheduled-poll, or a manual CSV export/import depends entirely on what Hazarlink actually offers once asked — still undetermined.
 - Security: credentials live in environment variables / the hosting platform's secret manager, never in client-side code; the only integration point is a server-side route, never exposed to the browser.
-- Until the integration exists: forms route to email/notification only, and parts browsing stays category/make-based with a request flow — never a fabricated stock count or fake "in stock" badge.
+- Until a real integration method is confirmed: forms route to email/notification only, and parts browsing stays category/make-based with a request flow — never a fabricated stock count or fake "in stock" badge.
 
 ---
 
