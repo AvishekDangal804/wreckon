@@ -1,7 +1,9 @@
 ---
+import { getCollection } from "astro:content";
 import Container from "./Container.astro";
 import Button from "./Button.astro";
 import Logo from "./Logo.astro";
+import { safeJsonLd } from "../lib/safeJsonLd";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -15,10 +17,36 @@ const currentPath = Astro.url.pathname;
 function isActive(href: string) {
   return href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 }
+
+const [services, partsCategories, makes] = await Promise.all([
+  getCollection("services"),
+  getCollection("partsCategories"),
+  getCollection("makes"),
+]);
+
+const searchIndex = [
+  ...services.map((s) => ({ label: s.data.name, sub: "Service", href: `/services/${s.id}` })),
+  ...partsCategories.map((c) => ({ label: c.data.name, sub: "Used Parts", href: "/parts" })),
+  ...makes.map((m) => ({ label: m.data.name, sub: "Vehicle Make", href: `/makes/${m.id}` })),
+];
 ---
 <header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
-  <Container class="flex items-center justify-between py-4">
+  <Container class="flex items-center justify-between gap-4 py-4">
     <Logo />
+
+    <div class="site-search relative hidden flex-1 max-w-sm lg:block">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
+        <circle cx="11" cy="11" r="7" />
+        <path d="m21 21-4.3-4.3" />
+      </svg>
+      <input
+        type="text"
+        class="search-input w-full rounded-sm border border-ink-700 bg-white py-2 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
+        placeholder="Search parts, makes or services"
+        autocomplete="off"
+      />
+      <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
+    </div>
 
     <nav class="hidden lg:flex items-center gap-6">
       {navItems.map((item) => (
@@ -51,6 +79,20 @@ function isActive(href: string) {
 
   <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
     <Container class="flex flex-col gap-1 py-3">
+      <div class="site-search relative mb-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input
+          type="text"
+          class="search-input w-full rounded-sm border border-ink-700 bg-white py-2 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          placeholder="Search parts, makes or services"
+          autocomplete="off"
+        />
+        <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
+      </div>
+
       {navItems.map((item) => (
         <a
           href={item.href}
@@ -65,6 +107,8 @@ function isActive(href: string) {
   </nav>
 </header>
 
+<script type="application/json" id="search-index" set:html={safeJsonLd(searchIndex)}></script>
+
 <script>
   const toggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("mobile-menu");
@@ -72,5 +116,62 @@ function isActive(href: string) {
     const isHidden = menu?.classList.contains("hidden");
     menu?.classList.toggle("hidden");
     toggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
+  });
+
+  type SearchItem = { label: string; sub: string; href: string };
+
+  const indexEl = document.getElementById("search-index");
+  const searchIndex: SearchItem[] = indexEl ? JSON.parse(indexEl.textContent || "[]") : [];
+
+  function renderResults(container: HTMLElement, items: SearchItem[]) {
+    container.innerHTML = "";
+    if (items.length === 0) {
+      container.classList.add("hidden");
+      return;
+    }
+    for (const item of items.slice(0, 8)) {
+      const a = document.createElement("a");
+      a.href = item.href;
+      a.className = "block px-4 py-2 text-sm text-ink-800 hover:bg-amber-50 hover:text-amber-600";
+      a.innerHTML = `${item.label} <span class="text-ink-400">&middot; ${item.sub}</span>`;
+      container.appendChild(a);
+    }
+    container.classList.remove("hidden");
+  }
+
+  document.querySelectorAll<HTMLElement>(".site-search").forEach((wrapper) => {
+    const input = wrapper.querySelector<HTMLInputElement>(".search-input");
+    const results = wrapper.querySelector<HTMLElement>(".search-results");
+    if (!input || !results) return;
+
+    input.addEventListener("input", () => {
+      const query = input.value.trim().toLowerCase();
+      if (query.length < 1) {
+        results.classList.add("hidden");
+        return;
+      }
+      const matches = searchIndex.filter((item) => item.label.toLowerCase().includes(query));
+      renderResults(results, matches);
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const first = results.querySelector<HTMLAnchorElement>("a");
+        if (first) {
+          e.preventDefault();
+          window.location.href = first.href;
+        }
+      }
+      if (e.key === "Escape") {
+        results.classList.add("hidden");
+        input.blur();
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!wrapper.contains(e.target as Node)) {
+        results.classList.add("hidden");
+      }
+    });
   });
 </script>
