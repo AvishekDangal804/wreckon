@@ -30,56 +30,62 @@ const searchIndex = [
   ...makes.map((m) => ({ label: m.data.name, sub: "Vehicle Make", href: `/makes/${m.id}` })),
 ];
 ---
-<header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
-  <Container class="flex items-center justify-between gap-4 py-4">
-    <Logo />
+<header class="sticky top-0 z-40 text-ink-50">
+  <div class="border-b border-ink-700 bg-ink-950">
+    <Container class="flex items-center gap-4 py-4">
+      <Logo />
 
-    <div class="site-search relative hidden flex-1 max-w-sm lg:block">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
-        <circle cx="11" cy="11" r="7" />
-        <path d="m21 21-4.3-4.3" />
-      </svg>
-      <input
-        type="text"
-        class="search-input w-full rounded-sm border border-ink-700 bg-white py-2 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-        placeholder="Search parts, makes or services"
-        autocomplete="off"
-      />
-      <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
-    </div>
+      <div class="site-search relative hidden flex-1 max-w-md md:block">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
+          <circle cx="11" cy="11" r="7" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <input
+          type="text"
+          class="search-input w-full rounded-sm border border-ink-700 bg-white py-2 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
+          placeholder="Search parts, makes or services"
+          autocomplete="off"
+        />
+        <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
+      </div>
 
-    <nav class="hidden lg:flex items-center gap-6">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          class={`border-b-2 pb-1 text-sm font-medium transition-colors ${isActive(item.href) ? "border-white text-white" : "border-transparent text-ink-200 hover:text-amber-400"}`}
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
+      <div class="ml-auto hidden items-center gap-4 lg:flex">
+        <Button href="/sell-your-car" size="sm">Sell Your Car</Button>
+        <Button href="https://hazarlink.com.au/" size="sm" target="_blank" rel="noopener noreferrer">Dealer Form</Button>
+      </div>
 
-    <div class="hidden lg:flex items-center gap-4">
-      <Button href="/sell-your-car" size="sm">Sell Your Car</Button>
-      <Button href="https://hazarlink.com.au/" size="sm" target="_blank" rel="noopener noreferrer">Dealer Form</Button>
-    </div>
+      <button
+        id="menu-toggle"
+        class="ml-auto inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400 lg:hidden"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </Container>
+  </div>
 
-    <button
-      id="menu-toggle"
-      class="lg:hidden inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
-      aria-label="Toggle menu"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
-  </Container>
+  <div class="hidden border-b border-ink-700 bg-ink-900 lg:block">
+    <Container>
+      <nav class="flex items-center gap-6 py-2.5">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`border-b-2 pb-1 text-sm font-medium transition-colors ${isActive(item.href) ? "border-white text-white" : "border-transparent text-ink-200 hover:text-amber-400"}`}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </Container>
+  </div>
 
   <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
     <Container class="flex flex-col gap-1 py-3">
-      <div class="site-search relative mb-2">
+      <div class="site-search relative mb-2 md:hidden">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
           <circle cx="11" cy="11" r="7" />
           <path d="m21 21-4.3-4.3" />
