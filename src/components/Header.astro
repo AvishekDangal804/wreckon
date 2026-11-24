@@ -30,33 +30,43 @@ const searchIndex = [
   ...makes.map((m) => ({ label: m.data.name, sub: "Vehicle Make", href: `/makes/${m.id}` })),
 ];
 ---
-<header class="sticky top-0 z-40 text-ink-50">
-  <div class="border-b border-ink-700 bg-ink-950">
-    <Container class="flex items-center gap-4 py-4">
-      <Logo />
+<header class="sticky top-0 z-40 bg-ink-950 text-ink-50 border-b border-ink-700">
+  <Container class="relative flex items-center justify-between py-4">
+    <Logo />
 
-      <div class="site-search relative hidden flex-1 max-w-md md:block">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
+    <nav class="hidden lg:flex items-center gap-6">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`border-b-2 pb-1 text-sm font-medium transition-colors ${isActive(item.href) ? "border-white text-white" : "border-transparent text-ink-200 hover:text-amber-400"}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2 lg:gap-4">
+      <button
+        id="search-toggle"
+        class="inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
+        aria-label="Search"
+        aria-expanded="false"
+        aria-controls="search-panel"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
           <circle cx="11" cy="11" r="7" />
           <path d="m21 21-4.3-4.3" />
         </svg>
-        <input
-          type="text"
-          class="search-input w-full rounded-sm border border-ink-700 bg-white py-2 pl-9 pr-3 text-sm text-ink-900 placeholder:text-ink-500 focus:outline-none focus:ring-2 focus:ring-amber-400"
-          placeholder="Search parts, makes or services"
-          autocomplete="off"
-        />
-        <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
-      </div>
+      </button>
 
-      <div class="ml-auto hidden items-center gap-4 lg:flex">
+      <div class="hidden items-center gap-4 lg:flex">
         <Button href="/sell-your-car" size="sm">Sell Your Car</Button>
         <Button href="https://hazarlink.com.au/" size="sm" target="_blank" rel="noopener noreferrer">Dealer Form</Button>
       </div>
 
       <button
         id="menu-toggle"
-        class="ml-auto inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400 lg:hidden"
+        class="lg:hidden inline-flex items-center justify-center rounded-sm p-2 text-ink-200 hover:text-amber-400"
         aria-label="Toggle menu"
         aria-expanded="false"
         aria-controls="mobile-menu"
@@ -65,27 +75,10 @@ const searchIndex = [
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
-    </Container>
-  </div>
+    </div>
 
-  <div class="hidden border-b border-ink-700 bg-ink-900 lg:block">
-    <Container>
-      <nav class="flex items-center gap-6 py-2.5">
-        {navItems.map((item) => (
-          <a
-            href={item.href}
-            class={`border-b-2 pb-1 text-sm font-medium transition-colors ${isActive(item.href) ? "border-white text-white" : "border-transparent text-ink-200 hover:text-amber-400"}`}
-          >
-            {item.label}
-          </a>
-        ))}
-      </nav>
-    </Container>
-  </div>
-
-  <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
-    <Container class="flex flex-col gap-1 py-3">
-      <div class="site-search relative mb-2 md:hidden">
+    <div id="search-panel" class="site-search absolute inset-x-0 top-full z-50 hidden border-t border-ink-700 bg-ink-950 p-4 shadow-lg">
+      <div class="relative mx-auto max-w-xl">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500">
           <circle cx="11" cy="11" r="7" />
           <path d="m21 21-4.3-4.3" />
@@ -96,9 +89,13 @@ const searchIndex = [
           placeholder="Search parts, makes or services"
           autocomplete="off"
         />
-        <div class="search-results absolute inset-x-0 top-full z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
+        <div class="search-results relative z-50 mt-1 hidden max-h-80 overflow-y-auto rounded-sm border border-ink-200 bg-white text-left shadow-lg"></div>
       </div>
+    </div>
+  </Container>
 
+  <nav id="mobile-menu" class="hidden lg:hidden border-t border-ink-700 bg-ink-950">
+    <Container class="flex flex-col gap-1 py-3">
       {navItems.map((item) => (
         <a
           href={item.href}
@@ -122,6 +119,17 @@ const searchIndex = [
     const isHidden = menu?.classList.contains("hidden");
     menu?.classList.toggle("hidden");
     toggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
+  });
+
+  const searchToggle = document.getElementById("search-toggle");
+  const searchPanel = document.getElementById("search-panel");
+  searchToggle?.addEventListener("click", () => {
+    const isHidden = searchPanel?.classList.contains("hidden");
+    searchPanel?.classList.toggle("hidden");
+    searchToggle.setAttribute("aria-expanded", isHidden ? "true" : "false");
+    if (isHidden) {
+      searchPanel?.querySelector<HTMLInputElement>(".search-input")?.focus();
+    }
   });
 
   type SearchItem = { label: string; sub: string; href: string };
@@ -169,15 +177,23 @@ const searchIndex = [
         }
       }
       if (e.key === "Escape") {
-        results.classList.add("hidden");
+        searchPanel?.classList.add("hidden");
+        searchToggle?.setAttribute("aria-expanded", "false");
         input.blur();
       }
     });
+  });
 
-    document.addEventListener("click", (e) => {
-      if (!wrapper.contains(e.target as Node)) {
-        results.classList.add("hidden");
-      }
-    });
+  document.addEventListener("click", (e) => {
+    if (
+      searchPanel &&
+      !searchPanel.classList.contains("hidden") &&
+      !searchPanel.contains(e.target as Node) &&
+      e.target !== searchToggle &&
+      !searchToggle?.contains(e.target as Node)
+    ) {
+      searchPanel.classList.add("hidden");
+      searchToggle?.setAttribute("aria-expanded", "false");
+    }
   });
 </script>
