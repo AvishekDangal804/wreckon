@@ -1,22 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  /* "Bold editorial" palette — near-black-green base, single gold accent. */
-  --color-ink-950: #0e2a20;
-  --color-ink-900: #121614;
-  --color-ink-800: #16432f;
-  --color-ink-700: #243c33;
-  --color-ink-600: #3e4642;
-  --color-ink-400: #565e5a;
-  --color-ink-200: #c3c8c5;
-  --color-ink-100: #e3e5e4;
-  --color-ink-50: #f2f3f2;
+  /* Industrial automotive palette — charcoal/graphite neutrals, burnt-orange accent. */
+  --color-ink-950: #171b20;
+  --color-ink-900: #1d2228;
+  --color-ink-800: #262d35;
+  --color-ink-700: #303840;
+  --color-ink-600: #4a525a;
+  --color-ink-400: #6b7278;
+  --color-ink-200: #d8d5cc;
+  --color-ink-100: #e9e8e3;
+  --color-ink-50: #f5f4f1;
 
-  --color-amber-600: #b3900f;
-  --color-amber-500: #e5b41e;
-  --color-amber-400: #f4c531;
-  --color-amber-300: #f7d668;
-  --color-amber-200: #fae69b;
+  --color-amber-900: #542410;
+  --color-amber-800: #6e2f14;
+  --color-amber-700: #8a3b19;
+  --color-amber-600: #a84a20;
+  --color-amber-500: #cc5a28;
+  --color-amber-400: #e56b32;
+  --color-amber-300: #ea9972;
+  --color-amber-200: #f0b494;
+  --color-amber-100: #f6d2bc;
+  --color-amber-50: #fbe8dd;
 
   --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
